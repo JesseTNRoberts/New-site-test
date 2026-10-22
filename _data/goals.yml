@@ -1,55 +1,38 @@
 # Progress trackers shown on the homepage (rendered by _includes/goals.html).
 #
-# To update: change `current`. For a new year, bump `due` and reset `current`.
-# After `due` passes, a card shows "Final" instead of a countdown.
-#   id       unique key (used for HTML ids)
-#   label    card title
-#   unit     what is being counted
-#   verb     label under the current number
-#   current  progress so far
-#   target   goal
-#   due      deadline (YYYY-MM-DD)
+# Trackers count from Jan 1 to Dec 31 of `year`. Each January, bump `year` and
+# set new targets; the automatic counts restart on their own.
+#
+#   source: scholar  count of papers dated `year` on Google Scholar (updated daily)
+#   source: strava   miles of `sport_types` activities in `year` (updated daily)
+#   source: manual   uses `current` below; update it by hand
+#
+# Live numbers are written to _data/stats.yml by scripts/update_stats.rb.
 
-- id: research
-  label: Research
-  unit: papers
-  verb: Written
-  current: 10
-  target: 10
-  due: 2026-01-01
-  # LLM uncertainty (submitted)
-  # RL + transformer, Smart contract (published)
-  # Poster: A Few-Shot Learning Method for SMS Phishing Detection and Explanation Using SLMs (published)
-  # Eric LLM paper (published)
-  # Smart contracts (published)
-  # LLM uncertainty 2 (submitted)
-  # Micah paper 2 (submitted)
-  # Basic category usage in VLMs (revising)
-  # Uno LLM (submitted)
-  # Not counted yet: Travis paper, Mike Soare paper
+year: 2026
 
-- id: creative
-  label: Creative
-  unit: words
-  verb: Written
-  current: 1000
-  target: 15000
-  due: 2026-01-01
+trackers:
+  - id: publications
+    label: Publications
+    unit: papers
+    verb: Published
+    source: scholar
+    target: 10        # TODO: confirm 2026 target
 
-- id: miles
-  label: Miles
-  unit: miles
-  verb: Ran
-  current: 1000
-  target: 1000
-  due: 2026-01-01
+  - id: miles
+    label: Miles
+    unit: miles
+    verb: Ran
+    source: strava
+    sport_types: [Run, TrailRun]   # Strava sport_type names to count
+    target: 1000      # TODO: confirm 2026 target
 
-- id: grants
-  label: Grants
-  unit: written
-  verb: Submitted
-  current: 5
-  target: 4
-  due: 2026-01-01
-  # Schmidt Sciences Cherokee; Schmidt Sciences inference-time uncertainty;
-  # NSF NAIRR; NSF Amani; ONR white paper
+  - id: grants
+    label: Grants
+    unit: proposals
+    verb: Submitted
+    source: manual
+    current: 0        # TODO: 2026 submissions so far
+    target: 4         # TODO: confirm 2026 target
+    # 2025 (5 submitted): Schmidt Sciences Cherokee; Schmidt Sciences inference-time
+    # uncertainty; NSF NAIRR; NSF Amani; ONR white paper

@@ -1,0 +1,26 @@
+{% comment %}
+  Publication list mirrored from Google Scholar (_data/publications.yml, refreshed daily by
+  scripts/update_stats.rb). Grouped by year, newest first. Your own name is bolded.
+  Until the first successful Scholar fetch, falls back to the hand-exported _data/citations.csv.
+{% endcomment %}
+{% assign pubs = site.data.publications %}
+{% if pubs and pubs.papers and pubs.papers.size > 0 %}
+  {% assign by_year = pubs.papers | group_by: "year" %}
+  {% for group in by_year %}
+  <h3 class="pub-year">{% if group.name == "" or group.name == nil %}Undated{% else %}{{ group.name }}{% endif %}</h3>
+  <ol class="pub-list">
+    {% for p in group.items %}
+    {% assign authors = p.authors | replace: "J Roberts", "<strong>J Roberts</strong>" | replace: "JT Roberts", "<strong>JT Roberts</strong>" %}
+    <li class="pub">
+      <span class="pub__title">{% if p.url %}<a href="{{ p.url }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}</span>
+      {% if p.authors != "" %}<span class="pub__authors">{{ authors }}</span>{% endif %}
+      {% if p.venue != "" %}<span class="pub__venue">{{ p.venue }}</span>{% endif %}
+      {% if p.cited_by > 0 %}<span class="pub__cites">Cited by {{ p.cited_by }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% endfor %}
+  <p class="pub-updated">Mirrored from <a href="{{ pubs.profile }}">Google Scholar</a>, last updated {{ pubs.updated | date: "%B %-d, %Y" }}.</p>
+{% else %}
+  {% include publications %}
+{% endif %}

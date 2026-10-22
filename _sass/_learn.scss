@@ -87,3 +87,56 @@
 .torch-canvas-link {
   margin: 0.25em 0;
 }
+
+/* ==========================================================================
+   Publications page (_includes/scholar-publications.html)
+   ========================================================================== */
+
+.pub-year {
+  margin-top: 1.5em;
+}
+
+.pub-list {
+  margin: 0.5em 0 1em;
+  padding-left: 0;
+  list-style: none;
+}
+
+.pub {
+  margin-bottom: 0.9em;
+  line-height: 1.45;
+
+  &__title {
+    display: block;
+    font-weight: bold;
+
+    a { text-decoration: none; }
+  }
+
+  &__authors,
+  &__venue {
+    display: block;
+    font-size: $type-size-6;
+  }
+
+  &__venue {
+    font-style: italic;
+    color: $gray;
+  }
+
+  &__cites {
+    display: inline-block;
+    margin-top: 0.2em;
+    padding: 0 0.5em;
+    font-size: $type-size-7;
+    color: $gray;
+    background: #eef1f4;
+    border-radius: 999px;
+  }
+}
+
+.pub-updated {
+  margin-top: 2em;
+  font-size: $type-size-6;
+  color: $gray;
+}

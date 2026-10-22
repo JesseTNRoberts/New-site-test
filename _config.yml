@@ -172,6 +172,7 @@ exclude:
   - README.md
   - Gemfile.lock
   - .github
+  - scripts
   - tmp
   - vendor
 keep_files:

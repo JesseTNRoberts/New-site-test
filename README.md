@@ -10,9 +10,9 @@ theme and is deployed to GitHub Pages by GitHub Actions.
 | --- | --- |
 | Homepage text | `_pages/about.md` |
 | Top navigation | `_data/navigation.yml` |
-| Goal trackers (homepage) | `_data/goals.yml` (rendered by `_includes/goals.html`) |
+| Goal trackers (homepage) | targets in `_data/goals.yml`; live numbers in `_data/stats.yml` (auto, daily) |
 | Strava / Goodreads widgets | `_includes/widgets/` |
-| Publications list | `_data/citations.csv` (plus detail pages in `_publications/`) |
+| Publications list | `_data/publications.yml`, mirrored from Google Scholar daily (`_data/citations.csv` is the fallback) |
 | Courses | `_teaching/` |
 | Interactive demos | files in `assets/demonstrations/`, listed in `_data/demos.yml` (shown on `/learn/`) |
 | Torch Canvas models | `_data/torch_canvas.yml` (links `/torch-canvas/?open=<id>`; button: `{% include torch-canvas-link.html model="<id>" %}`) |
@@ -36,6 +36,20 @@ GitHub serves Pages from Jesse's other repos under this domain, for example
 bundle install
 bundle exec jekyll serve --livereload   # http://localhost:4000
 ```
+
+## Automatic updates (Google Scholar, Strava)
+
+The workflow runs every day at about 5:23am Central and on every push. It runs
+`scripts/update_stats.rb`, which:
+
+- reads your Google Scholar profile (the URL in `_config.yml`), rewrites the Publications page
+  list, and counts this year's papers. If Scholar blocks the request, it counts from OpenAlex
+  using your ORCID instead, and the publication list keeps its last good version;
+- adds up this year's Run and TrailRun miles from Strava (needs the three `STRAVA_*` repo
+  secrets; run `ruby scripts/strava_auth.rb` once to get them).
+
+If a source fails, its last numbers are kept. You can also start it by hand under
+**Actions → Build and deploy site → Run workflow**.
 
 ## Deploying
 

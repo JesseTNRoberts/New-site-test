@@ -3,6 +3,11 @@
 # One-time setup: repo Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
 # The custom domain (www.jessetnroberts.com) stays configured in Settings -> Pages, so
 # project sites such as /torch-canvas/ keep being served under it.
+#
+# A daily scheduled run refreshes the homepage trackers and the Publications page from
+# Google Scholar and Strava (scripts/update_stats.rb) and redeploys. Strava needs three
+# repo secrets: STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
+# (see scripts/strava_auth.rb). Without them, Strava is skipped and everything else works.
 name: Build and deploy site
 
 on:
@@ -10,9 +15,11 @@ on:
     branches: [master, main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "23 10 * * *" # daily, ~5:23am Central
 
 permissions:
-  contents: read
+  contents: write # lets the scheduled run save refreshed stats back to the repo
   pages: write
   id-token: write
 
@@ -31,6 +38,36 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
 
+      # Refresh live numbers (Scholar publications, Strava miles). Failures never block the
+      # deploy: the script keeps the last good numbers for any source that doesn't answer.
+      - name: Refresh stats from Google Scholar and Strava
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: ruby scripts/update_stats.rb
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+
+      # On scheduled/manual runs, commit the refreshed data so the repo keeps the latest
+      # numbers (and a fallback if a source is down tomorrow). Timestamp-only changes are
+      # not committed, to keep history quiet.
+      - name: Save refreshed stats
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          files="_data/stats.yml _data/publications.yml"
+          git add -N $files 2>/dev/null || true
+          if git diff -U0 -- $files | grep -E '^[+-][^+-]' | grep -vqE '^[+-]\s*updated:'; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add $files
+            git commit -m "Update stats from Google Scholar and Strava"
+            git push || echo "Push failed (branch moved?); will retry tomorrow"
+          else
+            echo "No changes worth committing"
+          fi
+
       - id: pages
         uses: actions/configure-pages@v5
 
@@ -46,7 +83,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
 
   deploy:
-    # Pull requests only build (as a check); pushes to the default branch deploy.
+    # Pull requests only build (as a check); pushes, the daily schedule, and manual runs deploy.
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
