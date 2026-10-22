@@ -53,7 +53,11 @@ def http_get(url, headers = {})
   headers.each { |k, v| req[k] = v }
   res = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https",
                         open_timeout: 15, read_timeout: 30) { |h| h.request(req) }
-  raise FetchError, "GET #{uri.host}#{uri.path} -> HTTP #{res.code}" unless res.is_a?(Net::HTTPSuccess)
+  unless res.is_a?(Net::HTTPSuccess)
+    # Include the service's own error message if it sent one (never the URL's query, which may hold a key)
+    detail = (JSON.parse(res.body)["error"] rescue nil)
+    raise FetchError, "GET #{uri.host}#{uri.path} -> HTTP #{res.code}#{detail ? " (#{detail})" : ''}"
+  end
 
   res.body.force_encoding("UTF-8")
 end
@@ -150,7 +154,7 @@ end
 # mirror the profile is SerpApi's Google Scholar Author API (free plan: 250 searches/month;
 # this uses ~1 per day). Set the SERPAPI_KEY repo secret to enable it.
 def fetch_serpapi(user_id, year)
-  key = ENV["SERPAPI_KEY"].to_s
+  key = ENV["SERPAPI_KEY"].to_s.strip
   raise FetchError, "SERPAPI_KEY not set" if key.empty?
   raise FetchError, "no Google Scholar profile URL in _config.yml" unless user_id
 
