@@ -17,11 +17,11 @@ trackers:
     unit: papers
     verb: Published
     source: scholar
-    target: 10        # TODO: confirm 2026 target
+    target: 10
 
   - id: miles
     label: Miles
     unit: miles
     verb: Ran
     source: strava
-    target: 1000      # TODO: confirm 2026 target
+    target: 1000
