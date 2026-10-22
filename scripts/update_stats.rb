@@ -55,7 +55,11 @@ def http_get(url, headers = {})
                         open_timeout: 15, read_timeout: 30) { |h| h.request(req) }
   unless res.is_a?(Net::HTTPSuccess)
     # Include the service's own error message if it sent one (never the URL's query, which may hold a key)
-    detail = (JSON.parse(res.body)["error"] rescue nil)
+    body = (JSON.parse(res.body) rescue {})
+    body = {} unless body.is_a?(Hash)
+    # SerpApi: {"error": "..."}; Strava: {"message": "...", "errors": [{"field": "activity:read_permission", "code": "missing"}]}
+    detail = body["error"] || [body["message"], *Array(body["errors"]).map { |e| [e["field"], e["code"]].compact.join(" ") }].compact.join(": ")
+    detail = nil if detail.to_s.empty?
     raise FetchError, "GET #{uri.host}#{uri.path} -> HTTP #{res.code}#{detail ? " (#{detail})" : ''}"
   end
 
