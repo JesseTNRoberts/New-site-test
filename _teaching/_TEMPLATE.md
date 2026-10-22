@@ -19,6 +19,8 @@ summary: >-
   One or two sentences about the course.
 website:                        # optional: separate course site or LMS link
 syllabus:                       # optional: link to syllabus (e.g. /files/AI4200-syllabus.pdf)
+reading_list:                   # optional: link to a reading list (e.g. Zotero)
+schedule_label:                 # optional: heading for the list below (default "Lectures"; e.g. "Schedule")
 
 lectures:
   - week: 1
@@ -31,6 +33,12 @@ lectures:
     video:                      # optional: recording link
     demos: [neuron-2d]          # optional: ids from _data/demos.yml
     models: [llama2_7b]         # optional: Torch Canvas preset ids from _data/torch_canvas.yml
+    readings:                   # optional: papers for this session
+      - title: "Attention Is All You Need"
+        authors: "Vaswani et al."
+        year: 2017
+        venue: NeurIPS
+        url: https://arxiv.org/abs/1706.03762
     note: ""                    # optional: one line (e.g. "Project 1 released")
 ---
 

@@ -20,10 +20,11 @@ layout: single
     {% if c.status == "current" %}<span class="course-status course-status--current">Current</span>{% endif %}
   </p>
   {% if c.summary and c.summary != "" %}<p class="course-head__summary">{{ c.summary }}</p>{% endif %}
-  {% if c.website or c.syllabus %}
+  {% if c.website or c.syllabus or c.reading_list %}
   <p class="course-head__actions">
     {% if c.website %}<a class="btn btn--inverse" href="{{ c.website }}">Course website</a>{% endif %}
     {% if c.syllabus %}<a class="btn btn--inverse" href="{{ c.syllabus | relative_url }}">Syllabus</a>{% endif %}
+    {% if c.reading_list %}<a class="btn btn--inverse" href="{{ c.reading_list }}">Reading list</a>{% endif %}
   </p>
   {% endif %}
 </div>
@@ -31,7 +32,7 @@ layout: single
 {{ content }}
 
 {% if lectures.size > 0 %}
-<h2 id="lectures">Lectures <span class="count">{{ lectures.size }}</span></h2>
+<h2 id="lectures">{% if c.schedule_label %}{{ c.schedule_label }}{% else %}Lectures{% endif %} <span class="count">{{ lectures.size }}</span></h2>
 {% assign weeks = lectures | group_by: "week" %}
 {% for w in weeks %}
 <section class="week">

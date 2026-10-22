@@ -22,7 +22,7 @@ I am currently **accepting applications** for master's and Phd students. If you 
 
 Introduction to LLMs
 ------
-For those interested in learning more about LLMs, I have put together a reading list [here](https://www.zotero.org/groups/5650079/llm_foundations_reading/items/PA9EGZCE)!
+For those interested in learning more about LLMs, I have put together a reading list [here](https://www.zotero.org/groups/5650079/llm_foundations_reading/items/PA9EGZCE)! It's the backbone of my graduate seminar, [CSC 7970: Special Topics on LLMs]({{ '/teaching/S2026-CSC7970' | relative_url }}), where you can see the papers week by week.
 
 <!-- Additionally, I have given some lectures on LLMs and research that might be useful:
 
