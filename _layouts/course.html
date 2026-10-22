@@ -43,7 +43,7 @@ layout: single
 </section>
 {% endfor %}
 {% else %}
-  {% unless c.website %}<p class="course-empty">Lecture materials for this course will appear here.</p>{% endunless %}
+  {% if c.status == "current" and c.website == nil %}<p class="course-empty">Lecture materials for this course will appear here.</p>{% endif %}
 {% endif %}
 
 {% if course_demos.size > 0 %}

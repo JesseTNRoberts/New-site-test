@@ -18,7 +18,7 @@
     <h4 class="lecture__title">
       {% if l.slides %}<a href="{{ l.slides | relative_url }}">{{ l.title }}</a>{% else %}{{ l.title }}{% endif %}
     </h4>
-    {% if l.date %}<p class="lecture__date">{{ l.date | date: "%a, %b %-d" }}</p>{% endif %}
+    {% if l.date %}<p class="lecture__date">{% if c.dates_are_weeks %}Week of {{ l.date | date: "%b %-d" }}{% else %}{{ l.date | date: "%a, %b %-d" }}{% endif %}</p>{% endif %}
     {% if l.topics and l.topics.size > 0 %}
     <p class="lecture__topics">{% for t in l.topics %}<span class="learn-tag">{{ t }}</span>{% endfor %}</p>
     {% endif %}

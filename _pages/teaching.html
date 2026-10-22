@@ -11,8 +11,11 @@ excerpt: "Courses, lecture slides, and interactive demos by Jesse Roberts at Ten
 {% assign courses = site.teaching | sort: "date" | reverse %}
 {% assign current = courses | where: "status", "current" %}
 {% assign past = courses | where_exp: "c", "c.status != 'current'" %}
+{% comment %} The library lists sessions with materials (slides, papers, demos, ...); exam and
+   presentation days stay on their course pages. {% endcomment %}
 {% assign lecture_total = 0 %}
-{% for c in courses %}{% assign lecture_total = lecture_total | plus: c.lectures.size %}{% endfor %}
+{% for c in courses %}{% for l in c.lectures %}{% if l.slides or l.pdf or l.video or l.readings or l.demos or l.models %}{% assign lecture_total = lecture_total | plus: 1 %}{% endif %}{% endfor %}{% endfor %}
+{% assign library_initial = 8 %}
 
 <p class="teaching-intro">
   I teach machine learning and deep learning at Tennessee Tech. Slides open in the browser; interactive
@@ -33,17 +36,26 @@ excerpt: "Courses, lecture slides, and interactive demos by Jesse Roberts at Ten
   <input id="lecture-search" class="library-search" type="search" placeholder="Search lectures by title or topic…" autocomplete="off">
   <div class="library-filters" role="group" aria-label="Filter by course">
     <button type="button" class="chip is-active" data-course="">All</button>
-    {% for c in courses %}{% if c.lectures.size > 0 %}
+    {% for c in courses %}{% assign has = false %}{% for l in c.lectures %}{% if l.slides or l.pdf or l.video or l.readings or l.demos or l.models %}{% assign has = true %}{% endif %}{% endfor %}{% if has %}
     <button type="button" class="chip" data-course="{{ c.course_id }}">{{ c.code }}</button>
     {% endif %}{% endfor %}
   </div>
 </div>
 <div class="library" id="library">
+  {% assign shown = 0 %}
   {% for c in courses %}
     {% assign ordered = c.lectures | reverse %}
-    {% for l in ordered %}{% include lecture-card.html lecture=l course=c show_course=true %}{% endfor %}
+    {% for l in ordered %}{% if l.slides or l.pdf or l.video or l.readings or l.demos or l.models %}
+      {% assign shown = shown | plus: 1 %}
+      {% if shown > library_initial %}<div class="library-extra" hidden>{% endif %}
+      {% include lecture-card.html lecture=l course=c show_course=true %}
+      {% if shown > library_initial %}</div>{% endif %}
+    {% endif %}{% endfor %}
   {% endfor %}
   <p class="library-empty" hidden>No lectures match that search.</p>
+  {% if lecture_total > library_initial %}
+  <button type="button" class="library-more" id="library-more">Show all {{ lecture_total }} lectures</button>
+  {% endif %}
 </div>
 {% endif %}
 
@@ -61,10 +73,17 @@ excerpt: "Courses, lecture slides, and interactive demos by Jesse Roberts at Ten
     var search = document.getElementById('lecture-search');
     var chips = document.querySelectorAll('.library-filters .chip');
     var items = lib.querySelectorAll('.lecture');
+    var extras = lib.querySelectorAll('.library-extra');
+    var more = document.getElementById('library-more');
     var empty = lib.querySelector('.library-empty');
     var course = '';
+    var expanded = false;
     function apply() {
       var words = search.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var filtering = words.length > 0 || course !== '';
+      // Searching or filtering looks at everything; otherwise show the most recent few.
+      extras.forEach(function (el) { el.hidden = !(filtering || expanded); });
+      if (more) more.hidden = filtering || expanded;
       var shown = 0;
       items.forEach(function (el) {
         var text = el.dataset.search.toLowerCase();
@@ -76,6 +95,7 @@ excerpt: "Courses, lecture slides, and interactive demos by Jesse Roberts at Ten
       empty.hidden = shown !== 0;
     }
     search.addEventListener('input', apply);
+    if (more) more.addEventListener('click', function () { expanded = true; apply(); });
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
         chips.forEach(function (c) { c.classList.remove('is-active'); });

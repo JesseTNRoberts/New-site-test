@@ -21,6 +21,7 @@ website:                        # optional: separate course site or LMS link
 syllabus:                       # optional: link to syllabus (e.g. /files/AI4200-syllabus.pdf)
 reading_list:                   # optional: link to a reading list (e.g. Zotero)
 schedule_label:                 # optional: heading for the list below (default "Lectures"; e.g. "Schedule")
+dates_are_weeks:                # optional: true if lecture dates are week-start dates ("Week of Aug 18")
 
 lectures:
   - week: 1

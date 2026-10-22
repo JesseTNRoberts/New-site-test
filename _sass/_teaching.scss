@@ -149,6 +149,28 @@ $teach-soft: #f6f8fa;
     margin-bottom: 2.5em;
   }
 
+  .library-more {
+    display: block;
+    width: 100%;
+    margin: 0.5em 0 0;
+    padding: 0.6em;
+    font-family: inherit;
+    font-size: $type-size-6;
+    font-weight: bold;
+    color: $gray;
+    cursor: pointer;
+    background: $teach-soft;
+    border: 1px dashed #c9d1d9;
+    border-radius: 10px;
+
+    &:hover {
+      color: $teach-accent;
+      border-color: $teach-accent;
+    }
+
+    &[hidden] { display: none; }
+  }
+
   .library-empty {
     color: $gray;
     font-style: italic;
