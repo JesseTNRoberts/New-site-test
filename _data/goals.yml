@@ -5,7 +5,7 @@
 #
 #   source: scholar  count of papers dated `year` on Google Scholar (updated daily)
 #   source: strava   year-to-date running miles from Strava totals; public activities only (daily)
-#   source: manual   uses `current` below; update it by hand
+#   source: manual   uses a `current:` value you set by hand
 #
 # Live numbers are written to _data/stats.yml by scripts/update_stats.rb.
 
@@ -25,13 +25,3 @@ trackers:
     verb: Ran
     source: strava
     target: 1000      # TODO: confirm 2026 target
-
-  - id: grants
-    label: Grants
-    unit: proposals
-    verb: Submitted
-    source: manual
-    current: 0        # TODO: 2026 submissions so far
-    target: 4         # TODO: confirm 2026 target
-    # 2025 (5 submitted): Schmidt Sciences Cherokee; Schmidt Sciences inference-time
-    # uncertainty; NSF NAIRR; NSF Amani; ONR white paper
