@@ -9,6 +9,7 @@
 #   SERPAPI_KEY            mirrors Google Scholar (Scholar blocks GitHub's servers directly)
 #   STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN  (see scripts/strava_auth.rb)
 # Without them, those sources are skipped and everything else still works.
+# It also syncs the Torch Canvas example library when that repo changes (scripts/sync_torch_canvas.js).
 name: Build and deploy site
 
 on:
@@ -51,23 +52,56 @@ jobs:
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
 
-      # On scheduled/manual runs, commit the refreshed data so the repo keeps the latest
-      # numbers (and a fallback if a source is down tomorrow). Timestamp-only changes are
-      # not committed, to keep history quiet.
-      - name: Save refreshed stats
+      # Torch Canvas example library (scheduled/manual runs only, and only when the torch-canvas
+      # repo has a new commit): list of models and blocks, diagram thumbnails, parameter counts.
+      - name: Check Torch Canvas for changes
+        id: tc
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         run: |
+          git clone --depth 1 https://github.com/JesseTNRoberts/torch-canvas "$RUNNER_TEMP/torch-canvas"
+          new=$(git -C "$RUNNER_TEMP/torch-canvas" rev-parse HEAD)
+          old=$(ruby -rjson -e 'puts JSON.parse(File.read("_data/torch_canvas_library.json"))["commit"] rescue puts ""')
+          if [ "$new" != "$old" ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; echo "::notice title=torch-canvas::New commit ${new:0:7}; syncing examples"
+          else echo "::notice title=torch-canvas::Examples up to date (${new:0:7})"; fi
+
+      - uses: actions/setup-node@v4
+        if: steps.tc.outputs.changed == 'true'
+        with:
+          node-version: 20
+
+      - name: Sync Torch Canvas examples
+        if: steps.tc.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          (cd "$RUNNER_TEMP/torch-canvas" && npm run build)   # bake the current examples into index.html
+          npm install --prefix "$RUNNER_TEMP/pw" playwright@1.56.1
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node scripts/sync_torch_canvas.js "$RUNNER_TEMP/torch-canvas"
+
+      # On scheduled/manual runs, commit refreshed data so the repo keeps the latest numbers (and a
+      # fallback if a source is down tomorrow). Timestamp-only stats changes aren't committed.
+      - name: Save refreshed data
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          what=""
           files=""
           for f in _data/stats.yml _data/publications.yml; do [ -f "$f" ] && files="$files $f"; done
           [ -n "$files" ] && git add -N $files
-          if git diff -U0 -- $files | grep -E '^[+-][^+-]' | grep -vqE '^[+-]\s*updated:'; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add $files
-            git commit -m "Update stats from Google Scholar and Strava"
-            if git push; then echo "::notice title=stats::Committed refreshed stats"
-            else echo "::warning title=stats::Push of refreshed stats failed; will retry next run"; fi
+          if [ -n "$files" ] && git diff -U0 -- $files | grep -E '^[+-][^+-]' | grep -vqE '^[+-]\s*updated:'; then
+            git add $files; what="stats"
+          fi
+          if [ "${{ steps.tc.outputs.changed }}" = "true" ]; then
+            git add -A _data/torch_canvas_library.json assets/torch-canvas
+            git diff --cached --quiet -- _data/torch_canvas_library.json assets/torch-canvas || what="$what torch-canvas"
+          fi
+          if [ -n "$what" ]; then
+            git commit -m "Update site data:$what"
+            if git push; then echo "::notice title=stats::Committed refreshed data:$what"
+            else echo "::warning title=stats::Push of refreshed data failed; will retry next run"; fi
           else
             echo "::notice title=stats::No data changes to commit"
           fi

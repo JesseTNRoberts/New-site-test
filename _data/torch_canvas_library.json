@@ -1,0 +1,232 @@
+{
+  "source": "https://github.com/JesseTNRoberts/torch-canvas",
+  "commit": "5d396a2237895dc44cb8b026e1a9e5a7070a072e",
+  "updated": "2026-10-22T23:37:14.876Z",
+  "networks": [
+    {
+      "kind": "network",
+      "file": "networks/01_residual_mlp.json",
+      "id": "residual_mlp",
+      "title": "Residual MLP",
+      "description": "The reference diagram: a down projection, three gated residual branches and a gated head, every layer drawn out.",
+      "blocks": [],
+      "params": "1.52M",
+      "thumb": "/assets/torch-canvas/thumbs/residual_mlp.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/02_residual_mlp_block.json",
+      "id": "residual_mlp_block",
+      "title": "Residual MLP with a block",
+      "description": "The same network with the gated branch defined once as GatedBlock and repeated 3 times.",
+      "blocks": [
+        "GatedBlock"
+      ],
+      "params": "1.52M",
+      "thumb": "/assets/torch-canvas/thumbs/residual_mlp_block.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/03_mlp_10_relu.py",
+      "id": "mlp_10_relu",
+      "title": "MLP, 10 layers, ReLU",
+      "description": "A plain deep MLP: 10 Linear layers with ReLU between them. Good for seeing how depth and init affect the signal.",
+      "blocks": [],
+      "params": "729.9K",
+      "thumb": "/assets/torch-canvas/thumbs/mlp_10_relu.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/04_mlp_10_tanh.py",
+      "id": "mlp_10_tanh",
+      "title": "MLP, 10 layers, Tanh",
+      "description": "The same 10-layer MLP with Tanh between the layers.",
+      "blocks": [],
+      "params": "729.9K",
+      "thumb": "/assets/torch-canvas/thumbs/mlp_10_tanh.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/05_prenorm_residual_mlp.py",
+      "id": "prenorm_residual_mlp",
+      "title": "Pre-norm residual MLP",
+      "description": "A transformer-style stack: four pre-LayerNorm GELU MLP blocks with residual connections, then a classifier.",
+      "blocks": [],
+      "params": "2.31M",
+      "thumb": "/assets/torch-canvas/thumbs/prenorm_residual_mlp.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/06_decoder_transformer.json",
+      "id": "decoder_transformer",
+      "title": "Decoder-only transformer, fully expanded",
+      "description": "A 2-layer GPT-style decoder with every layer drawn out: token and position embeddings, causal multi-head self-attention, a GELU MLP, residuals, LayerNorms and the LM head.",
+      "blocks": [],
+      "params": "92.16M",
+      "thumb": "/assets/torch-canvas/thumbs/decoder_transformer.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/07_gpt2.json",
+      "id": "gpt2",
+      "title": "GPT-2 (124M architecture)",
+      "description": "GPT-2 small: token and position embeddings, 12 × GPT2Block (pre-norm causal self-attention and a tanh-GELU MLP, with dropout), a final LayerNorm and the LM head. GPT-2 initialization: N(0, 0.02), residual projections scaled by 1/√24. The LM head shares its weights with the token embedding (weight tying), as in GPT-2: 124,439,808 parameters.",
+      "blocks": [
+        "GPT2Block"
+      ],
+      "params": "124.44M",
+      "thumb": "/assets/torch-canvas/thumbs/gpt2.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/08_bert_base.json",
+      "id": "bert_base",
+      "title": "BERT-base (masked LM)",
+      "description": "BERT-base as BertForMaskedLM: word, position and token-type embeddings with a LayerNorm, 12 × BertLayer (post-norm: bidirectional self-attention, then a GELU feed-forward, each followed by add & LayerNorm), and the masked-LM head whose decoder shares its weights with the word embedding. 109,514,298 parameters, BERT initialization N(0, 0.02).",
+      "blocks": [
+        "BertLayer"
+      ],
+      "params": "109.51M",
+      "thumb": "/assets/torch-canvas/thumbs/bert_base.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/09_llama2_7b.json",
+      "id": "llama2_7b",
+      "title": "Llama 2 7B",
+      "description": "Llama 2 7B as LlamaForCausalLM: token embedding, 32 × LlamaDecoderLayer (pre-norm with RMSNorm; causal self-attention with rotary position embeddings on q and k; a SwiGLU MLP, down(silu(gate(x)) · up(x))), a final RMSNorm and an untied LM head. No biases. 6,738,415,616 parameters, initialization N(0, 0.02). The code builds the full model, about 27 GB in float32.",
+      "blocks": [
+        "LlamaDecoderLayer"
+      ],
+      "params": "6.74B",
+      "thumb": "/assets/torch-canvas/thumbs/llama2_7b.png"
+    },
+    {
+      "kind": "network",
+      "file": "networks/10_qwen2_5_vl_3b.json",
+      "id": "qwen2_5_vl_3b",
+      "title": "Qwen2.5-VL 3B",
+      "description": "Qwen2.5-VL-3B-Instruct as Qwen2_5_VLForConditionalGeneration, giving the same output as the reference implementation in Hugging Face transformers. Inputs as Qwen's processor gives them: pixel_values (every image's 14 × 14 × 2-frame patches, 1176 values each, one list for all images), image_grid_thw (frames, rows, columns of patches per image) and input_ids (with image placeholder tokens). Vision: patch embedding, patches put in window order, 4 × Qwen2_5_VLVisionStage (32 blocks: 2D rotary positions, attention within 112-pixel windows except every eighth block, which attends over the whole frame), patch merger, original order restored. The image features replace the placeholder tokens; 36 × Qwen2_5_VLDecoderLayer with M-RoPE 3-D positions; final RMSNorm and an LM head tied to the embedding. 3,754,622,976 parameters.",
+      "blocks": [
+        "Qwen2_5_VLVisionBlock",
+        "Qwen2_5_VLVisionStage",
+        "Qwen2_5_VLPatchMerger",
+        "Qwen2_5_VLDecoderLayer"
+      ],
+      "params": "3.75B",
+      "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_3b.png"
+    }
+  ],
+  "blocks": [
+    {
+      "kind": "block",
+      "file": "blocks/bert_layer.json",
+      "id": "bert_layer",
+      "title": "BertLayer",
+      "description": "BERT encoder layer (post-norm): bidirectional multi-head self-attention, then a GELU feed-forward, each followed by add & LayerNorm.",
+      "blocks": [],
+      "params": "7.09M",
+      "thumb": "/assets/torch-canvas/thumbs/bert_layer.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/gated_block.json",
+      "id": "gated_block",
+      "title": "GatedBlock",
+      "description": "Pre-norm gated residual branch: x + (σ(N W) ⊙ N W ⊙ N V) W_out, with N = RMSNorm(x).",
+      "blocks": [],
+      "params": "393.5K",
+      "thumb": "/assets/torch-canvas/thumbs/gated_block.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/gpt2_block.json",
+      "id": "gpt2_block",
+      "title": "GPT2Block",
+      "description": "GPT-2 transformer block: pre-LayerNorm causal multi-head self-attention and a tanh-GELU MLP, each with dropout and a residual.",
+      "blocks": [],
+      "params": "7.09M",
+      "thumb": "/assets/torch-canvas/thumbs/gpt2_block.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/linear_relu.py",
+      "id": "linear_relu",
+      "title": "LinearReLU",
+      "description": "A Linear layer followed by ReLU; repeat it to make a deep MLP.",
+      "blocks": [],
+      "params": "65.8K",
+      "thumb": "/assets/torch-canvas/thumbs/linear_relu.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/llama_decoder_layer.json",
+      "id": "llama_decoder_layer",
+      "title": "LlamaDecoderLayer",
+      "description": "Llama decoder layer: pre-RMSNorm causal self-attention with rotary position embeddings on q and k, then a SwiGLU MLP, each with a residual. No biases.",
+      "blocks": [],
+      "params": "202.38M",
+      "thumb": "/assets/torch-canvas/thumbs/llama_decoder_layer.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/prenorm_mlp.py",
+      "id": "prenorm_mlp",
+      "title": "PreNormMLP",
+      "description": "Transformer-style MLP with a residual: x + W2 GELU(W1 LayerNorm(x)).",
+      "blocks": [],
+      "params": "526.1K",
+      "thumb": "/assets/torch-canvas/thumbs/prenorm_mlp.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/qwen2_5_vl_decoder_layer.json",
+      "id": "qwen2_5_vl_decoder_layer",
+      "title": "Qwen2_5_VLDecoderLayer",
+      "description": "Qwen2.5 decoder layer: pre-RMSNorm causal self-attention with M-RoPE positions (time, row, column; sections 16/24/24, base 1e6) where 16 query heads share 2 key/value heads (bias on q, k, v), then a SwiGLU MLP, each with a residual. Inputs: hidden states and the 3-D positions.",
+      "blocks": [],
+      "params": "77.08M",
+      "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_decoder_layer.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/qwen2_5_vl_patch_merger.json",
+      "id": "qwen2_5_vl_patch_merger",
+      "title": "Qwen2_5_VLPatchMerger",
+      "description": "Qwen2.5-VL patch merger: RMSNorm, then each 2 × 2 group of patches side by side, Linear → GELU → Linear to the language model width.",
+      "blocks": [],
+      "params": "36.71M",
+      "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_patch_merger.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/qwen2_5_vl_vision_block.json",
+      "id": "qwen2_5_vl_vision_block",
+      "title": "Qwen2_5_VLVisionBlock",
+      "description": "Qwen2.5-VL vision encoder block: pre-RMSNorm multi-head self-attention (bias on the projections; 2D rotary positions from each patch's row and column; attention limited by the mask input) and a SwiGLU MLP with bias, each with a residual. Inputs: patches, the allowed-attention mask, patch positions.",
+      "blocks": [],
+      "params": "19.70M",
+      "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_vision_block.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/qwen2_5_vl_vision_stage.json",
+      "id": "qwen2_5_vl_vision_stage",
+      "title": "Qwen2_5_VLVisionStage",
+      "description": "Eight Qwen2.5-VL vision blocks: seven attending within 112-pixel windows (window_mask), then one attending over each whole frame (frame_mask). Four of these make the 32-block vision encoder.",
+      "blocks": [],
+      "params": "157.62M",
+      "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_vision_stage.png"
+    },
+    {
+      "kind": "block",
+      "file": "blocks/swiglu.py",
+      "id": "swiglu",
+      "title": "SwiGLU",
+      "description": "Gated MLP without a residual: W_out (SiLU(x W) ⊙ x V). Output size can differ from input size.",
+      "blocks": [],
+      "params": "393.2K",
+      "thumb": "/assets/torch-canvas/thumbs/swiglu.png"
+    }
+  ]
+}

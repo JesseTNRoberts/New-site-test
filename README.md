@@ -15,7 +15,8 @@ theme and is deployed to GitHub Pages by GitHub Actions.
 | Publications list | `_data/publications.yml`, mirrored from Google Scholar daily (`_data/citations.csv` is the fallback) |
 | Courses | `_teaching/` |
 | Interactive demos | files in `assets/demonstrations/`, listed in `_data/demos.yml` (shown on `/learn/`) |
-| Torch Canvas models | `_data/torch_canvas.yml` (links `/torch-canvas/?open=<id>`; button: `{% include torch-canvas-link.html model="<id>" %}`) |
+| Torch Canvas page | `/tools/torch-canvas/` (`_pages/torch-canvas.html`); text and features in `_data/torch_canvas.yml` |
+| Torch Canvas models | synced from the torch-canvas repo into `_data/torch_canvas_library.json` + `assets/torch-canvas/thumbs/` (daily, when it changes). Link: `/torch-canvas/?open=<id>`; button: `{% include torch-canvas-link.html model="<id>" %}` |
 | Lecture slides | `assets/lectures/<COURSE>/` |
 | CV | `_pages/cv.md` |
 | Downloadable files (PDFs) | `files/` |
@@ -50,6 +51,11 @@ The workflow runs every day at about 5:23am Central and on every push. It runs
 - reads this year's running miles from Strava's year-to-date totals. It uses only the basic
   `read` permission, never individual activities, and counts activities visible to Everyone.
   This needs the three `STRAVA_*` repo secrets; run `ruby scripts/strava_auth.rb` once to get them.
+
+It also checks the torch-canvas repo, and when it has a new commit, rebuilds the list of example
+models and blocks shown on `/tools/torch-canvas/`, with a diagram thumbnail and parameter count for
+each (`scripts/sync_torch_canvas.js`, which opens every example in the real app in a headless browser).
+To add a model to the page, add it to torch-canvas's `examples/`.
 
 If a source fails, its last numbers are kept. You can also start it by hand under
 **Actions → Build and deploy site → Run workflow**.

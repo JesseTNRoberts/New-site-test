@@ -9,6 +9,9 @@ main:
   - title: "Learn"
     url: /learn/
 
+  - title: "Torch Canvas"
+    url: /tools/torch-canvas/
+
   - title: "Meeting Request"
     url: /meeting/
 

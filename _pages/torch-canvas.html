@@ -1,0 +1,73 @@
+---
+layout: single
+title: "Torch Canvas"
+permalink: /tools/torch-canvas/
+author_profile: true
+excerpt: "Torch Canvas: a visual editor for neural networks that writes PyTorch as you draw. Open GPT-2, BERT, Llama 2 and more in the browser."
+---
+{% comment %}
+  The example list below is synced daily from the torch-canvas repo (scripts/sync_torch_canvas.js →
+  _data/torch_canvas_library.json). Text and features live in _data/torch_canvas.yml.
+  Note: this page is at /tools/torch-canvas/ because /torch-canvas/ is the app itself.
+{% endcomment %}
+{% assign tc = site.data.torch_canvas %}
+{% assign lib = site.data.torch_canvas_library %}
+{% assign all = lib.networks | concat: lib.blocks %}
+
+<section class="tc-hero">
+  <img class="tc-hero__mark" src="{{ '/assets/torch-canvas/logo.svg' | relative_url }}" alt="" width="72" height="72">
+  <div>
+    <p class="tc-hero__tagline">{{ tc.tool.tagline }}</p>
+    <p class="tc-hero__desc">{{ tc.tool.description }}</p>
+    <p class="tc-hero__actions">
+      <a class="btn btn--primary btn--large" href="{{ tc.tool.url }}">Open Torch Canvas</a>
+      <a class="btn btn--inverse btn--large" href="{{ tc.tool.repo }}"><i class="fab fa-github" aria-hidden="true"></i> Source on GitHub</a>
+    </p>
+  </div>
+</section>
+
+{% if lib %}
+<h2 id="models">Start from a real model</h2>
+<p class="tc-lede">Each one opens in the editor, ready to explore, change, and export. {{ lib.networks.size }} networks and {{ lib.blocks.size }} building blocks, straight from the project's example library.</p>
+
+<div class="tc-grid tc-grid--featured">
+  {% for id in tc.featured %}{% assign m = lib.networks | where: "id", id | first %}{% if m %}{% include tc-model-card.html model=m %}{% endif %}{% endfor %}
+</div>
+
+<h3 class="tc-subhead">More networks</h3>
+<div class="tc-grid">
+  {% for m in lib.networks %}{% unless tc.featured contains m.id %}{% include tc-model-card.html model=m %}{% endunless %}{% endfor %}
+</div>
+
+<h3 class="tc-subhead" id="blocks">Building blocks</h3>
+<p class="tc-lede">Reusable pieces the networks are made of. Open one to see inside, or drop it into your own model.</p>
+<div class="tc-grid tc-grid--blocks">
+  {% for m in lib.blocks %}{% include tc-model-card.html model=m compact=true %}{% endfor %}
+</div>
+{% endif %}
+
+<h2 id="features">What it does</h2>
+<div class="tc-features">
+  {% for f in tc.features %}
+  <div class="tc-feature">
+    <i class="{{ f.icon }}" aria-hidden="true"></i>
+    <h3>{{ f.title }}</h3>
+    <p>{{ f.text }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+<h2 id="teaching">For teaching</h2>
+<p>
+  Every example has its own link, so a slide or course page can open exactly the model being discussed:
+  <code>{{ site.url }}{{ tc.tool.url }}?open=gpt2</code> opens GPT-2.
+  {% assign used = "" %}{% for pair in tc.courses %}{% assign codes = pair[1] | join: "," %}{% assign used = used | append: codes | append: "," %}{% endfor %}
+  {% assign course_pages = site.teaching | sort: "date" | reverse %}{% assign listed = 0 %}
+  {% for c in course_pages %}{% if used contains c.course_id %}{% if listed == 0 %}It's used in {% else %}, {% endif %}<a href="{{ c.url | relative_url }}">{{ c.code }} {{ c.title }}</a>{% assign listed = listed | plus: 1 %}{% endif %}{% endfor %}{% if listed > 0 %}.{% endif %}
+</p>
+
+{% if lib %}
+<p class="tc-synced">
+  Example list synced from <a href="{{ lib.source }}">{{ lib.source | remove: "https://github.com/" }}</a>{% if lib.commit != "" %} (<a href="{{ lib.source }}/tree/{{ lib.commit }}/examples"><code>{{ lib.commit | slice: 0, 7 }}</code></a>){% endif %} on {{ lib.updated | date: "%B %-d, %Y" }}.
+</p>
+{% endif %}

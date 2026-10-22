@@ -37,7 +37,7 @@ I build browser-based tools for teaching machine learning. The main one is [Torc
 
 {% include torch-canvas-link.html model="llama2_7b" label="Open Llama 2 7B" %}
 
-More tools and demos are on the [Learn]({{ '/learn/' | relative_url }}) page.
+See [everything it can open]({{ '/tools/torch-canvas/' | relative_url }}), from a 10-layer MLP to Qwen2.5-VL, or browse more tools and demos on the [Learn]({{ '/learn/' | relative_url }}) page.
 
 Goals
 ------

@@ -9,23 +9,19 @@ excerpt: "Interactive tools and demos for learning machine learning and deep lea
 Hands-on tools I've built for my courses. Everything runs in the browser, with nothing to install.
 
 {% assign tc = site.data.torch_canvas %}
+{% assign tcl = site.data.torch_canvas_library %}
 <section class="learn-feature">
   <p class="learn-feature__eyebrow">Tool · {{ tc.tool.tagline }}</p>
-  <h2 class="learn-feature__title"><a href="{{ tc.tool.url }}">{{ tc.tool.title }}</a></h2>
+  <h2 class="learn-feature__title"><a href="{{ tc.tool.page | relative_url }}">{{ tc.tool.title }}</a></h2>
   <p>{{ tc.tool.description }}</p>
-  <p><a class="btn btn--primary" href="{{ tc.tool.url }}">Open {{ tc.tool.title }}</a></p>
-
-  {% if tc.models.size > 0 %}
-  <h3 class="learn-feature__subtitle">Start from a model</h3>
-  <ul class="learn-list">
-    {% for m in tc.models %}
-    <li class="learn-card">
-      <a class="learn-card__title" href="{{ tc.tool.url }}?open={{ m.id | url_encode }}">{{ m.title }}</a>
-      {% if m.description %}<p class="learn-card__desc">{{ m.description }}</p>{% endif %}
-      {% include learn-tags.html item=m %}
-    </li>
-    {% endfor %}
-  </ul>
+  <p>
+    <a class="btn btn--primary" href="{{ tc.tool.url }}">Open {{ tc.tool.title }}</a>
+    <a class="btn btn--inverse" href="{{ tc.tool.page | relative_url }}">All {{ tcl.networks.size }} example models →</a>
+  </p>
+  {% if tcl %}
+  <div class="tc-grid tc-grid--featured">
+    {% for id in tc.featured limit: 4 %}{% assign m = tcl.networks | where: "id", id | first %}{% if m %}{% include tc-model-card.html model=m compact=true %}{% endif %}{% endfor %}
+  </div>
   {% endif %}
 </section>
 

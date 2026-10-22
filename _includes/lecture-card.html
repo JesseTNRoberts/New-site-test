@@ -42,7 +42,7 @@
     {% for id in l.demos %}{% assign d = site.data.demos | where: "id", id | first %}{% if d %}
       <a class="lecture__link" href="{{ d.url | relative_url }}" title="{{ d.title }}"><i class="fas fa-sliders-h" aria-hidden="true"></i> Demo</a>
     {% endif %}{% endfor %}
-    {% for id in l.models %}{% assign m = tc.models | where: "id", id | first %}
+    {% assign tcl = site.data.torch_canvas_library %}{% assign tc_all = tcl.networks | concat: tcl.blocks %}{% for id in l.models %}{% assign m = tc_all | where: "id", id | first %}
       <a class="lecture__link" href="{{ tc.tool.url }}?open={{ id | url_encode }}" title="Open {{ m.title | default: id }} in Torch Canvas"><i class="fas fa-project-diagram" aria-hidden="true"></i> Model</a>
     {% endfor %}
   </div>

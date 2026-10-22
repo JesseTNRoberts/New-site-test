@@ -10,7 +10,9 @@ layout: single
 {% assign tc = site.data.torch_canvas %}
 {% assign lectures = c.lectures | default: empty %}
 {% assign course_demos = site.data.demos | where_exp: "d", "d.courses contains c.course_id" %}
-{% assign course_models = tc.models | where_exp: "m", "m.courses contains c.course_id" %}
+{% assign tcl = site.data.torch_canvas_library %}{% assign tc_all = tcl.networks | concat: tcl.blocks %}
+{% assign course_models = "" | split: "" %}
+{% for pair in tc.courses %}{% if pair[1] contains c.course_id %}{% assign hit = tc_all | where: "id", pair[0] %}{% assign course_models = course_models | concat: hit %}{% endif %}{% endfor %}
 
 <div class="course-head">
   <p class="course-head__meta">
@@ -63,14 +65,9 @@ layout: single
 
 {% if course_models.size > 0 %}
 <h2 id="models">Models to explore in Torch Canvas</h2>
-<ul class="learn-list">
-  {% for m in course_models %}
-  <li class="learn-card">
-    <a class="learn-card__title" href="{{ tc.tool.url }}?open={{ m.id | url_encode }}">{{ m.title }}</a>
-    {% if m.description %}<p class="learn-card__desc">{{ m.description }}</p>{% endif %}
-  </li>
-  {% endfor %}
-</ul>
+<div class="tc-grid">
+  {% for m in course_models %}{% include tc-model-card.html model=m %}{% endfor %}
+</div>
 {% endif %}
 
 {% endcapture %}
