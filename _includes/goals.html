@@ -9,7 +9,7 @@
   {% assign current = nil %}
   {% assign updated = nil %}
   {% assign source_name = nil %}
-  {% if g.source == "scholar" and stats.year == goals.year and stats.publications %}
+  {% if g.source == "scholar" and stats.year == goals.year and stats.publications.source == "Google Scholar" %}
     {% assign current = stats.publications.papers_this_year %}
     {% assign updated = stats.publications.updated %}
     {% assign source_name = stats.publications.source %}

@@ -45,8 +45,8 @@ The workflow runs every day at about 5:23am Central and on every push. It runs
 - reads your Google Scholar profile (the URL in `_config.yml`), rewrites the Publications page
   list, and counts this year's papers. Scholar blocks GitHub's servers, so this goes through
   [SerpApi](https://serpapi.com) (free plan; add its key as the `SERPAPI_KEY` repo secret).
-  Without the key, this year's papers are counted from OpenAlex using your ORCID, and the
-  Publications page shows its last list (or `_data/citations.csv` until the first mirror);
+  If Scholar can't be reached, the last good numbers and list are kept (the page shows
+  `_data/citations.csv` until the first successful mirror);
 - adds up this year's Run and TrailRun miles from Strava (needs the three `STRAVA_*` repo
   secrets; run `ruby scripts/strava_auth.rb` once to get them).
 

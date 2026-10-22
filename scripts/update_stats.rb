@@ -5,7 +5,7 @@
 #
 #   publications  papers dated in the tracker year on Google Scholar, via SerpApi if
 #                 SERPAPI_KEY is set (Scholar blocks GitHub's servers directly), else a
-#                 direct Scholar request, else OpenAlex via ORCID (counts only).
+#                 direct Scholar request. Scholar is the only source.
 #                 A successful Scholar fetch also rewrites _data/publications.yml,
 #                 the list shown on the Publications page.
 #   strava        miles of matching activities (Run, TrailRun, ...) in the tracker year
@@ -15,7 +15,7 @@
 #
 # Configuration
 #   _data/goals.yml   year, and sport_types for the strava tracker
-#   _config.yml       author.googlescholar (profile URL) and author.orcid
+#   _config.yml       author.googlescholar (profile URL)
 #   env               SERPAPI_KEY (optional; https://serpapi.com, free plan is enough)
 #                     STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
 #                     (Strava is skipped if these aren't set; see scripts/strava_auth.rb)
@@ -146,17 +146,6 @@ def write_publications(papers, user_id)
   log "wrote #{papers.size} papers to #{PUBS_PATH}"
 end
 
-def fetch_openalex(orcid, year)
-  id = orcid.to_s[/\d{4}-\d{4}-\d{4}-\d{3}[\dX]/]
-  raise FetchError, "no ORCID in _config.yml" unless id
-
-  base = "https://api.openalex.org/works?per-page=1&filter=author.orcid:#{id}"
-  this_year = JSON.parse(http_get("#{base},publication_year:#{year}"))
-  total = JSON.parse(http_get(base))
-  { "papers_this_year" => this_year.dig("meta", "count"), "papers_total" => total.dig("meta", "count"),
-    "citations" => nil, "source" => "OpenAlex (ORCID)" }
-end
-
 # Google Scholar blocks requests from GitHub's servers (HTTP 403), so the reliable way to
 # mirror the profile is SerpApi's Google Scholar Author API (free plan: 250 searches/month;
 # this uses ~1 per day). Set the SERPAPI_KEY repo secret to enable it.
@@ -195,16 +184,18 @@ def fetch_serpapi(user_id, year)
     "citations" => citations, "source" => "Google Scholar" }
 end
 
-# Tries, in order: SerpApi (if SERPAPI_KEY is set), Scholar directly, then OpenAlex counts.
+# Scholar is the only source for publications (it's the curated one). Tries SerpApi first
+# (works from GitHub's servers), then a direct request. If both fail, the last good Scholar
+# numbers and list are kept.
 def fetch_publications(config, year)
   user_id = scholar_user_id(config)
+  errors = []
   [-> { fetch_serpapi(user_id, year) }, -> { fetch_scholar(user_id, year) }].each do |source|
     return source.call
   rescue StandardError => e
-    log "publications: #{e.message}"
+    errors << e.message
   end
-  log "publications: falling back to OpenAlex (counts only; Publications page keeps its last list)"
-  fetch_openalex(config.dig("author", "orcid"), year)
+  raise FetchError, errors.join("; ")
 end
 
 # ---------------------------------------------------------------------- strava
@@ -253,6 +244,7 @@ def main
 
   old = File.exist?(STATS_PATH) ? (YAML.safe_load_file(STATS_PATH, permitted_classes: [Time, Date]) || {}) : {}
   old = {} unless old["year"].to_i == year # new year: don't carry last year's totals forward
+  old.delete("publications") unless old.dig("publications", "source") == "Google Scholar"
   now = Time.now.utc.iso8601
   stats = { "year" => year }
   changed = false
