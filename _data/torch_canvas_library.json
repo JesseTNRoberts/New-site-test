@@ -1,6 +1,6 @@
 {
   "source": "https://github.com/JesseTNRoberts/torch-canvas",
-  "commit": "5d396a2237895dc44cb8b026e1a9e5a7070a072e",
+  "commit": "",
   "updated": "2026-10-22T23:37:14.876Z",
   "networks": [
     {
@@ -70,7 +70,7 @@
       "file": "networks/07_gpt2.json",
       "id": "gpt2",
       "title": "GPT-2 (124M architecture)",
-      "description": "GPT-2 small: token and position embeddings, 12 × GPT2Block (pre-norm causal self-attention and a tanh-GELU MLP, with dropout), a final LayerNorm and the LM head. GPT-2 initialization: N(0, 0.02), residual projections scaled by 1/√24. The LM head shares its weights with the token embedding (weight tying), as in GPT-2: 124,439,808 parameters.",
+      "description": "GPT-2 small: token and position embeddings, 12 \u00d7 GPT2Block (pre-norm causal self-attention and a tanh-GELU MLP, with dropout), a final LayerNorm and the LM head. GPT-2 initialization: N(0, 0.02), residual projections scaled by 1/\u221a24. The LM head shares its weights with the token embedding (weight tying), as in GPT-2: 124,439,808 parameters.",
       "blocks": [
         "GPT2Block"
       ],
@@ -82,7 +82,7 @@
       "file": "networks/08_bert_base.json",
       "id": "bert_base",
       "title": "BERT-base (masked LM)",
-      "description": "BERT-base as BertForMaskedLM: word, position and token-type embeddings with a LayerNorm, 12 × BertLayer (post-norm: bidirectional self-attention, then a GELU feed-forward, each followed by add & LayerNorm), and the masked-LM head whose decoder shares its weights with the word embedding. 109,514,298 parameters, BERT initialization N(0, 0.02).",
+      "description": "BERT-base as BertForMaskedLM: word, position and token-type embeddings with a LayerNorm, 12 \u00d7 BertLayer (post-norm: bidirectional self-attention, then a GELU feed-forward, each followed by add & LayerNorm), and the masked-LM head whose decoder shares its weights with the word embedding. 109,514,298 parameters, BERT initialization N(0, 0.02).",
       "blocks": [
         "BertLayer"
       ],
@@ -94,7 +94,7 @@
       "file": "networks/09_llama2_7b.json",
       "id": "llama2_7b",
       "title": "Llama 2 7B",
-      "description": "Llama 2 7B as LlamaForCausalLM: token embedding, 32 × LlamaDecoderLayer (pre-norm with RMSNorm; causal self-attention with rotary position embeddings on q and k; a SwiGLU MLP, down(silu(gate(x)) · up(x))), a final RMSNorm and an untied LM head. No biases. 6,738,415,616 parameters, initialization N(0, 0.02). The code builds the full model, about 27 GB in float32.",
+      "description": "Llama 2 7B as LlamaForCausalLM: token embedding, 32 \u00d7 LlamaDecoderLayer (pre-norm with RMSNorm; causal self-attention with rotary position embeddings on q and k; a SwiGLU MLP, down(silu(gate(x)) \u00b7 up(x))), a final RMSNorm and an untied LM head. No biases. 6,738,415,616 parameters, initialization N(0, 0.02). The code builds the full model, about 27 GB in float32.",
       "blocks": [
         "LlamaDecoderLayer"
       ],
@@ -106,7 +106,7 @@
       "file": "networks/10_qwen2_5_vl_3b.json",
       "id": "qwen2_5_vl_3b",
       "title": "Qwen2.5-VL 3B",
-      "description": "Qwen2.5-VL-3B-Instruct as Qwen2_5_VLForConditionalGeneration, giving the same output as the reference implementation in Hugging Face transformers. Inputs as Qwen's processor gives them: pixel_values (every image's 14 × 14 × 2-frame patches, 1176 values each, one list for all images), image_grid_thw (frames, rows, columns of patches per image) and input_ids (with image placeholder tokens). Vision: patch embedding, patches put in window order, 4 × Qwen2_5_VLVisionStage (32 blocks: 2D rotary positions, attention within 112-pixel windows except every eighth block, which attends over the whole frame), patch merger, original order restored. The image features replace the placeholder tokens; 36 × Qwen2_5_VLDecoderLayer with M-RoPE 3-D positions; final RMSNorm and an LM head tied to the embedding. 3,754,622,976 parameters.",
+      "description": "Qwen2.5-VL-3B-Instruct as Qwen2_5_VLForConditionalGeneration, giving the same output as the reference implementation in Hugging Face transformers. Inputs as Qwen's processor gives them: pixel_values (every image's 14 \u00d7 14 \u00d7 2-frame patches, 1176 values each, one list for all images), image_grid_thw (frames, rows, columns of patches per image) and input_ids (with image placeholder tokens). Vision: patch embedding, patches put in window order, 4 \u00d7 Qwen2_5_VLVisionStage (32 blocks: 2D rotary positions, attention within 112-pixel windows except every eighth block, which attends over the whole frame), patch merger, original order restored. The image features replace the placeholder tokens; 36 \u00d7 Qwen2_5_VLDecoderLayer with M-RoPE 3-D positions; final RMSNorm and an LM head tied to the embedding. 3,754,622,976 parameters.",
       "blocks": [
         "Qwen2_5_VLVisionBlock",
         "Qwen2_5_VLVisionStage",
@@ -133,7 +133,7 @@
       "file": "blocks/gated_block.json",
       "id": "gated_block",
       "title": "GatedBlock",
-      "description": "Pre-norm gated residual branch: x + (σ(N W) ⊙ N W ⊙ N V) W_out, with N = RMSNorm(x).",
+      "description": "Pre-norm gated residual branch: x + (\u03c3(N W) \u2299 N W \u2299 N V) W_out, with N = RMSNorm(x).",
       "blocks": [],
       "params": "393.5K",
       "thumb": "/assets/torch-canvas/thumbs/gated_block.png"
@@ -193,7 +193,7 @@
       "file": "blocks/qwen2_5_vl_patch_merger.json",
       "id": "qwen2_5_vl_patch_merger",
       "title": "Qwen2_5_VLPatchMerger",
-      "description": "Qwen2.5-VL patch merger: RMSNorm, then each 2 × 2 group of patches side by side, Linear → GELU → Linear to the language model width.",
+      "description": "Qwen2.5-VL patch merger: RMSNorm, then each 2 \u00d7 2 group of patches side by side, Linear \u2192 GELU \u2192 Linear to the language model width.",
       "blocks": [],
       "params": "36.71M",
       "thumb": "/assets/torch-canvas/thumbs/qwen2_5_vl_patch_merger.png"
@@ -223,7 +223,7 @@
       "file": "blocks/swiglu.py",
       "id": "swiglu",
       "title": "SwiGLU",
-      "description": "Gated MLP without a residual: W_out (SiLU(x W) ⊙ x V). Output size can differ from input size.",
+      "description": "Gated MLP without a residual: W_out (SiLU(x W) \u2299 x V). Output size can differ from input size.",
       "blocks": [],
       "params": "393.2K",
       "thumb": "/assets/torch-canvas/thumbs/swiglu.png"
