@@ -38,7 +38,11 @@ TZ_OFFSET = "-06:00" # Central time; only matters for activities near midnight o
 
 class FetchError < StandardError; end
 
-def log(msg) = warn("[stats] #{msg}")
+def log(msg)
+  warn("[stats] #{msg}")
+  # In GitHub Actions, also surface each message as an annotation on the run's summary page.
+  puts "::notice title=stats::#{msg.gsub("\n", " ")}" if ENV["GITHUB_ACTIONS"]
+end
 
 def http_get(url, headers = {})
   uri = URI(url)

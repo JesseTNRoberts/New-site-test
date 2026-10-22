@@ -63,9 +63,10 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add $files
             git commit -m "Update stats from Google Scholar and Strava"
-            git push || echo "Push failed (branch moved?); will retry tomorrow"
+            if git push; then echo "::notice title=stats::Committed refreshed stats"
+            else echo "::warning title=stats::Push of refreshed stats failed; will retry next run"; fi
           else
-            echo "No changes worth committing"
+            echo "::notice title=stats::No data changes to commit"
           fi
 
       - id: pages
