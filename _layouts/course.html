@@ -29,7 +29,7 @@ layout: single
   {% endif %}
 </div>
 
-{{ content }}
+{% capture lect_block %}
 
 {% if lectures.size > 0 %}
 <h2 id="lectures">{% if c.schedule_label %}{{ c.schedule_label }}{% else %}Lectures{% endif %} <span class="count">{{ lectures.size }}</span></h2>
@@ -46,7 +46,10 @@ layout: single
   {% if c.status == "current" and c.website == nil %}<p class="course-empty">Lecture materials for this course will appear here.</p>{% endif %}
 {% endif %}
 
-{% if course_demos.size > 0 %}
+{% endcapture %}
+{% capture course_notes %}{{ content | strip }}{% endcapture %}
+{% comment %} Current courses lead with the lectures (what students come for); past courses lead with the description. {% endcomment %}
+{% capture extras_block %}{% if course_demos.size > 0 %}
 <h2 id="demos">Interactive demos</h2>
 <ul class="learn-list">
   {% for d in course_demos %}
@@ -68,6 +71,18 @@ layout: single
   </li>
   {% endfor %}
 </ul>
+{% endif %}
+
+{% endcapture %}
+{% if c.status == "current" %}
+{{ lect_block }}
+{{ extras_block }}
+{% if course_notes != "" %}<h2 id="about">About this course</h2>
+{{ content }}{% endif %}
+{% else %}
+{{ content }}
+{{ lect_block }}
+{{ extras_block }}
 {% endif %}
 
 <p class="course-back"><a href="{{ '/teaching/' | relative_url }}">← All courses and lectures</a></p>
