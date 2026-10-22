@@ -8,13 +8,13 @@
 #                 direct Scholar request. Scholar is the only source.
 #                 A successful Scholar fetch also rewrites _data/publications.yml,
 #                 the list shown on the Publications page.
-#   strava        miles of matching activities (Run, TrailRun, ...) in the tracker year
+#   strava        year-to-date running miles from Strava's totals (public activities only)
 #
 # Each source is independent: if one fails, its previous values in stats.yml are kept
 # and marked stale, so the site never shows a zero because an API hiccuped.
 #
 # Configuration
-#   _data/goals.yml   year, and sport_types for the strava tracker
+#   _data/goals.yml   year
 #   _config.yml       author.googlescholar (profile URL)
 #   env               SERPAPI_KEY (optional; https://serpapi.com, free plan is enough)
 #                     STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
@@ -36,7 +36,6 @@ PUBS_PATH = File.join(ROOT, "_data", "publications.yml")
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) " \
      "Chrome/128.0 Safari/537.36"
 METERS_PER_MILE = 1609.344
-TZ_OFFSET = "-06:00" # Central time; only matters for activities near midnight on Jan 1
 
 class FetchError < StandardError; end
 
@@ -221,25 +220,19 @@ def strava_access_token
   tok.fetch("access_token")
 end
 
-def fetch_strava(year, sport_types)
-  token = strava_access_token
-  after = Time.new(year, 1, 1, 0, 0, 0, TZ_OFFSET).to_i
-  before = Time.new(year + 1, 1, 1, 0, 0, 0, TZ_OFFSET).to_i
-  meters = 0.0
-  count = 0
-  (1..50).each do |page|
-    url = "https://www.strava.com/api/v3/athlete/activities?after=#{after}&before=#{before}&per_page=200&page=#{page}"
-    acts = JSON.parse(http_get(url, "Authorization" => "Bearer #{token}"))
-    acts.each do |a|
-      next unless sport_types.include?(a["sport_type"] || a["type"])
+# Uses Strava's athlete-stats endpoint, which returns only year-to-date totals (no routes,
+# maps, times, or individual activities) and needs only the basic "read" permission.
+# Strava counts only activities visible to Everyone, and all run types (Run, TrailRun, ...)
+# together, for the current calendar year.
+def fetch_strava(year)
+  raise FetchError, "Strava only reports totals for the current year" unless year == Time.now.year
 
-      meters += a["distance"].to_f
-      count += 1
-    end
-    break if acts.size < 200
-  end
-  { "miles_this_year" => (meters / METERS_PER_MILE).round(1), "activities" => count,
-    "sport_types" => sport_types }
+  token = strava_access_token
+  auth = { "Authorization" => "Bearer #{token}" }
+  athlete_id = JSON.parse(http_get("https://www.strava.com/api/v3/athlete", auth)).fetch("id")
+  stats = JSON.parse(http_get("https://www.strava.com/api/v3/athletes/#{athlete_id}/stats", auth))
+  runs = stats.fetch("ytd_run_totals")
+  { "miles_this_year" => (runs["distance"].to_f / METERS_PER_MILE).round(1), "activities" => runs["count"].to_i }
 end
 
 # ------------------------------------------------------------------------ main
@@ -248,7 +241,6 @@ def main
   config = YAML.safe_load_file(File.join(ROOT, "_config.yml"), aliases: true)
   goals = YAML.safe_load_file(File.join(ROOT, "_data", "goals.yml"), permitted_classes: [Date])
   year = (goals["year"] || Date.today.year).to_i
-  sport_types = goals.fetch("trackers", []).find { |t| t["source"] == "strava" }&.dig("sport_types") || %w[Run TrailRun]
 
   old = File.exist?(STATS_PATH) ? (YAML.safe_load_file(STATS_PATH, permitted_classes: [Time, Date]) || {}) : {}
   old = {} unless old["year"].to_i == year # new year: don't carry last year's totals forward
@@ -258,7 +250,7 @@ def main
   changed = false
 
   { "publications" => -> { fetch_publications(config, year) },
-    "strava" => -> { fetch_strava(year, sport_types) } }.each do |key, fetcher|
+    "strava" => -> { fetch_strava(year) } }.each do |key, fetcher|
     fresh = fetcher.call
     log "#{key}: #{fresh.inspect}"
     stats[key] = fresh.merge("updated" => now)

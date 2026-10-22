@@ -47,8 +47,9 @@ The workflow runs every day at about 5:23am Central and on every push. It runs
   [SerpApi](https://serpapi.com) (free plan; add its key as the `SERPAPI_KEY` repo secret).
   If Scholar can't be reached, the last good numbers and list are kept (the page shows
   `_data/citations.csv` until the first successful mirror);
-- adds up this year's Run and TrailRun miles from Strava (needs the three `STRAVA_*` repo
-  secrets; run `ruby scripts/strava_auth.rb` once to get them).
+- reads this year's running miles from Strava's year-to-date totals. It uses only the basic
+  `read` permission, never individual activities, and counts activities visible to Everyone.
+  This needs the three `STRAVA_*` repo secrets; run `ruby scripts/strava_auth.rb` once to get them.
 
 If a source fails, its last numbers are kept. You can also start it by hand under
 **Actions → Build and deploy site → Run workflow**.

@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-# One-time helper: get a Strava refresh token so the daily build can read your activities.
+# One-time helper: get a Strava refresh token so the daily build can read your year-to-date
+# running totals. It asks only for Strava's basic "read" permission: no access to individual
+# activities, routes, maps, or private activities.
 #
 # 1. Go to https://www.strava.com/settings/api and create an app.
 #    Any name and website work; set "Authorization Callback Domain" to: localhost
@@ -22,15 +24,12 @@ id, secret = ARGV
 abort "Usage: ruby scripts/strava_auth.rb CLIENT_ID CLIENT_SECRET" unless id && secret
 
 authorize = "https://www.strava.com/oauth/authorize?client_id=#{id}&response_type=code" \
-            "&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=activity:read_all"
+            "&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read"
 puts "\n1) Open this link and click Authorize:\n\n   #{authorize}\n\n"
 print "2) Paste the address your browser landed on (http://localhost/exchange_token?...):\n   > "
 answer = $stdin.gets.to_s.strip
 code = answer[/[?&]code=([^&\s]+)/, 1] || answer
 abort "No code found in what you pasted." if code.empty?
-unless answer.include?("activity:read_all") || !answer.include?("scope=")
-  warn "\nNote: you didn't grant 'View data about your private activities'. Only public activities will count."
-end
 
 res = Net::HTTP.post_form(URI("https://www.strava.com/oauth/token"),
                           "client_id" => id, "client_secret" => secret,

@@ -4,7 +4,7 @@
 # set new targets; the automatic counts restart on their own.
 #
 #   source: scholar  count of papers dated `year` on Google Scholar (updated daily)
-#   source: strava   miles of `sport_types` activities in `year` (updated daily)
+#   source: strava   year-to-date running miles from Strava totals; public activities only (daily)
 #   source: manual   uses `current` below; update it by hand
 #
 # Live numbers are written to _data/stats.yml by scripts/update_stats.rb.
@@ -24,7 +24,6 @@ trackers:
     unit: miles
     verb: Ran
     source: strava
-    sport_types: [Run, TrailRun]   # Strava sport_type names to count
     target: 1000      # TODO: confirm 2026 target
 
   - id: grants
