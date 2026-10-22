@@ -79,7 +79,10 @@ jobs:
       # such as https://www.jessetnroberts.com/site-preview/), so CSS and links stay on that copy.
       - name: Build with Jekyll
         run: |
-          echo "url: \"${{ steps.pages.outputs.origin }}\"" > _config.deploy.yml
+          # Always https: GitHub reports http:// when "Enforce HTTPS" is off, and browsers block
+          # http:// stylesheets on https:// pages (the site then loads unstyled).
+          origin="${{ steps.pages.outputs.origin }}"
+          echo "url: \"https://${origin#*://}\"" > _config.deploy.yml
           bundle exec jekyll build --config _config.yml,_config.deploy.yml --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
