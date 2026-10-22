@@ -140,3 +140,16 @@
   font-size: $type-size-6;
   color: $gray;
 }
+
+/* The theme sizes every `.page__content p` at 1em; keep card text small. */
+.page__content {
+  .learn-card__desc,
+  .learn-card__tags {
+    font-size: $type-size-6;
+  }
+
+  .learn-card__title,
+  .learn-feature__title a {
+    text-decoration: none;
+  }
+}

@@ -233,15 +233,13 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _teaching
+  # _teaching (course pages; see _teaching/_TEMPLATE.md)
   - scope:
       path: ""
       type: teaching
     values:
-      layout: single
+      layout: course
       author_profile: true
-      share: true
-      comments: true
   # _publications
   - scope:
       path: ""
