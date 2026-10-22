@@ -1,0 +1,58 @@
+# Builds the site with Jekyll and publishes it to GitHub Pages.
+#
+# One-time setup: repo Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+# The custom domain (www.jessetnroberts.com) stays configured in Settings -> Pages, so
+# project sites such as /torch-canvas/ keep being served under it.
+name: Build and deploy site
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      # Build for wherever this repo is published (the real domain, or a preview copy
+      # such as https://www.jessetnroberts.com/site-preview/), so CSS and links stay on that copy.
+      - name: Build with Jekyll
+        run: |
+          echo "url: \"${{ steps.pages.outputs.origin }}\"" > _config.deploy.yml
+          bundle exec jekyll build --config _config.yml,_config.deploy.yml --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    # Pull requests only build (as a check); pushes to the default branch deploy.
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

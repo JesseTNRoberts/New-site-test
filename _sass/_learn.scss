@@ -1,0 +1,89 @@
+/* ==========================================================================
+   /learn/ page: Torch Canvas feature, model and demo cards
+   ========================================================================== */
+
+.learn-feature {
+  margin: 1.5em 0 2.5em;
+  padding: 1.5em 1.75em;
+  background: #f6f8fa;
+  border: 1px solid #e3e7eb;
+  border-radius: 12px;
+
+  &__eyebrow {
+    margin: 0 0 0.25em;
+    font-size: $type-size-6;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $gray;
+  }
+
+  &__title {
+    margin: 0 0 0.5em;
+    padding: 0;
+    border: 0;
+
+    a { text-decoration: none; }
+  }
+
+  &__subtitle {
+    margin-top: 1.5em;
+  }
+}
+
+.learn-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1em;
+  margin: 1em 0 2em;
+  padding: 0;
+  list-style: none;
+}
+
+.learn-card {
+  margin: 0;
+  padding: 1em 1.1em;
+  background: #fff;
+  border: 1px solid #e3e7eb;
+  border-radius: 10px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    border-color: #c9d1d9;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  &__title {
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  &__desc {
+    margin: 0.4em 0 0.6em;
+    font-size: $type-size-6;
+    line-height: 1.5;
+  }
+
+  &__tags {
+    margin: 0;
+  }
+}
+
+.learn-tag {
+  display: inline-block;
+  margin: 0 0.3em 0.3em 0;
+  padding: 0.1em 0.55em;
+  font-size: $type-size-7;
+  color: $gray;
+  background: #eef1f4;
+  border-radius: 999px;
+
+  &--course {
+    color: #fff;
+    background: mix(#000, $primary-color, 35%);
+  }
+}
+
+.torch-canvas-link {
+  margin: 0.25em 0;
+}

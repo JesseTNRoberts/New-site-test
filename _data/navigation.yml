@@ -1,0 +1,16 @@
+# Top navigation links
+main:
+  - title: "Publications"
+    url: /publications/
+
+  - title: "Teaching"
+    url: /teaching/
+
+  - title: "Learn"
+    url: /learn/
+
+  - title: "Meeting Request"
+    url: /meeting/
+
+  - title: "CV"
+    url: /cv/

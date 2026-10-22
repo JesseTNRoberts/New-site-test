@@ -1,0 +1,27 @@
+# Torch Canvas (separate repo, served at /torch-canvas/) and the models it can open by name.
+#
+# Each model opens at /torch-canvas/?open=<id>. To add one, append an entry here;
+# it then shows up on /learn/ and can be linked from any page with
+#   {% include torch-canvas-link.html model="<id>" %}
+#
+#   id           preset name Torch Canvas understands (the ?open= value)
+#   title        display name
+#   description  one line on what students should look at (optional)
+#   courses      course codes this model is used in (optional)
+#   topics       tags (optional)
+
+tool:
+  title: Torch Canvas
+  url: /torch-canvas/
+  tagline: "Diagram ⇄ PyTorch"
+  description: >-
+    Build a network by dragging layers onto a canvas and get clean PyTorch code, or paste
+    an existing model in (via torch.fx) to see it as a diagram. Shows tensor sizes, plots
+    variance, and exports model.py / train.py.
+
+models:
+  - id: llama2_7b
+    title: Llama 2 7B
+    description: The architecture of a modern open LLM, with attention, RMSNorm, and a SwiGLU MLP in every block.
+    courses: [AI4200]
+    topics: [transformers, LLMs]
