@@ -5,9 +5,10 @@
 # project sites such as /torch-canvas/ keep being served under it.
 #
 # A daily scheduled run refreshes the homepage trackers and the Publications page from
-# Google Scholar and Strava (scripts/update_stats.rb) and redeploys. Strava needs three
-# repo secrets: STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
-# (see scripts/strava_auth.rb). Without them, Strava is skipped and everything else works.
+# Google Scholar and Strava (scripts/update_stats.rb) and redeploys. Optional repo secrets:
+#   SERPAPI_KEY            mirrors Google Scholar (Scholar blocks GitHub's servers directly)
+#   STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN  (see scripts/strava_auth.rb)
+# Without them, those sources are skipped and everything else still works.
 name: Build and deploy site
 
 on:
@@ -45,6 +46,7 @@ jobs:
         continue-on-error: true
         run: ruby scripts/update_stats.rb
         env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
           STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
@@ -56,8 +58,9 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         run: |
-          files="_data/stats.yml _data/publications.yml"
-          git add -N $files 2>/dev/null || true
+          files=""
+          for f in _data/stats.yml _data/publications.yml; do [ -f "$f" ] && files="$files $f"; done
+          [ -n "$files" ] && git add -N $files
           if git diff -U0 -- $files | grep -E '^[+-][^+-]' | grep -vqE '^[+-]\s*updated:'; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
