@@ -140,6 +140,8 @@ Developed a co-op program to improve recruitment. Oversaw hiring, training, and 
 ### Tennessee Technological University
 
 `2026`
+Wings Up 100 Award
+
 Research Contract with Wilson Sports
 
 ICML Silver Award for Excellence in Reviewing
