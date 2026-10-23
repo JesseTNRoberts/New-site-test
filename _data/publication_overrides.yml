@@ -5,6 +5,7 @@
 #   label  override the venue badge
 #   note   short note shown with the paper (e.g. an award)
 #   hide   true to leave the paper off the Publications page and CV
+#   areas  research area ids from _data/research.yml (replaces keyword matching for this paper)
 #
 # Fix titles, authors, years and venues on your Scholar profile itself; they flow through
 # the next morning.

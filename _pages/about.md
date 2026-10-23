@@ -12,13 +12,15 @@ redirect_from:
 
 My name is Jesse (Vanderbilt PhD '24). I am an assistant professor at Tennessee Tech University where I lead the language and artificial intelligence research (LAIR) group. 
 
-I envision a future in which AI is widely accessible to support the goals of individual humans. While there are many ways this might be approached, I focus on advancing NLP to better facilitate natural language collaboration between human and machine. Specifically, I want to undertand and improve LLM uncertainty and reasoning. However, I'm generally interested in any idea that can **positively impact people**.
+{{ site.data.research.tagline }} My work is supported by two [NSF grants]({{ '/research/#funding' | relative_url }}), and I'm a **CORE Institute Fellow for AI & Indigenous Language Revitalization** (2026–2027).
 
-I am also working to apply language model technology to the preservation of the Cherokee language (Tsalagi), drawing inspiration from the work done to preserve Irish (Gaeilge). The hope is to create a dynamic reservoir for the support of future generations of speakers. 
+<ul class="home-areas">
+{% for a in site.data.research.areas %}  <li><a href="{{ '/research/' | relative_url }}#{{ a.id }}"><i class="{{ a.icon }}" aria-hidden="true"></i> {{ a.title }}{% if a.emerging %} <span class="research-badge">Emerging</span>{% endif %}</a></li>
+{% endfor %}</ul>
 
-<!--The **specific aims** of my research are to (1) understand LLM cognition, (2) preserve endangered languages, (3) improve semantically-complex search, and (4) empower researchers with better tools for the analysis of linguistics and semantics. -->
+The Cherokee work draws on what worked for Irish (Gaeilge): the hope is a living resource that supports future generations of Tsalagi speakers. More on each area, with papers and press, is on the [Research]({{ '/research/' | relative_url }}) page.
 
-I am currently **accepting applications** for master's and Phd students. If you are a curious person with an interest in solving real problems and exploring untrodden paths through AI then feel free to reach out via email!
+I am currently **accepting applications** for master's and Ph.D. students. If you are a curious person with an interest in solving real problems and exploring untrodden paths through AI then feel free to reach out via email!
 
 Introduction to LLMs
 ------
