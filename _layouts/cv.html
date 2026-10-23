@@ -29,7 +29,7 @@ layout: default
 </div>
 
 <script>
-  // If the PDF hasn't been generated (e.g. a local preview), fall back to the print dialog.
+  /* If the PDF hasn't been generated (e.g. a local preview), fall back to the print dialog. */
   (function () {
     var a = document.querySelector('[data-fallback-print]');
     if (!a || !window.fetch) return;

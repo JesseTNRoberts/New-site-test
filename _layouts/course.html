@@ -34,7 +34,7 @@ layout: single
 {% capture lect_block %}
 
 {% if lectures.size > 0 %}
-<h2 id="lectures">{% if c.schedule_label %}{{ c.schedule_label }}{% else %}Lectures{% endif %} <span class="count">{{ lectures.size }}</span></h2>
+<h2 id="lectures">{% if c.schedule_label %}{{ c.schedule_label }}{% else %}Schedule{% endif %} <span class="count">{{ lectures.size }}</span></h2>
 {% assign weeks = lectures | group_by: "week" %}
 {% for w in weeks %}
 <section class="week">
