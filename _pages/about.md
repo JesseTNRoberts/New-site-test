@@ -12,7 +12,7 @@ redirect_from:
 
 My name is Jesse (Vanderbilt PhD '24). I am an assistant professor at Tennessee Tech University where I lead the language and artificial intelligence research (LAIR) group. 
 
-{{ site.data.research.tagline }} My work is supported by two [NSF grants]({{ '/research/#funding' | relative_url }}), and I'm a **CORE Institute Fellow for AI & Indigenous Language Revitalization** (2026–2027).
+{{ site.data.research.tagline }} My work is supported by two [NSF grants]({{ '/research/#funding' | relative_url }}), and I've been selected as a **CORE Institute Fellow for Indigenous Language Revitalization** for 2027.
 
 <ul class="home-areas">
 {% for a in site.data.research.areas %}  <li><a href="{{ '/research/' | relative_url }}#{{ a.id }}"><i class="{{ a.icon }}" aria-hidden="true"></i> {{ a.title }}{% if a.emerging %} <span class="research-badge">Emerging</span>{% endif %}</a></li>

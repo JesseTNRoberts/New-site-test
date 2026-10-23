@@ -36,6 +36,7 @@ excerpt: "Jesse Roberts's research at Tennessee Tech: deep learning fundamentals
     <div>
       <strong>{% if h.url %}<a href="{{ h.url }}">{{ h.title }}</a>{% else %}{{ h.title }}{% endif %}</strong>
       <span>{{ h.org }} · {{ h.years }}</span>
+      {% if h.blurb %}<p>{{ h.blurb }}</p>{% endif %}
     </div>
   </div>
   {% endif %}{% endif %}

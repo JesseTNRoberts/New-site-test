@@ -124,12 +124,11 @@ funding:
 # Fellowships and similar honors highlighted on the Research page and listed on the CV.
 honors:
   - id: fellowship-core
-    title: "CORE Institute Fellow: AI & Indigenous Language Revitalization"
-    org: "Convergence Research (CORE) Institute, San Diego Supercomputer Center, UC San Diego"
-    years: "2026–2027"
-    year: 2026
-    url: "https://scil.ucsd.edu/news/call-leadership-council-core-institute-fellows-ai-indigenous-language-revitalization"
+    title: "CORE Institute Fellow: Indigenous Language Revitalization"
+    org: "CORE Institute"
+    years: "2027"            # fellowship year (selected in 2026)
+    year: 2027
     blurb: >-
-      Named to the NSF-supported CORE Institute's 2026–2027 Fellows cohort on AI & Indigenous
-      Language Revitalization, which develops responsible, community-centered approaches to AI
-      for endangered languages.
+      Selected for a small cohort that will shape what responsible, community-centered AI looks
+      like in Indigenous language revitalization, collaborating on concrete projects over the
+      2027 fellowship year.
