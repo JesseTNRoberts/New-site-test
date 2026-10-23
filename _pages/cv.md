@@ -209,7 +209,9 @@ TnTech College of Engineering CAFE Workshop - Using LLMs in Research
 
 ## Publications
 
-{% include publications %}
+<div class="cv-publications" markdown="0">
+{% include cv-publications.html %}
+</div>
 
 <!--
 (Under Review at IJCAI) Rentschler, Micah, and Jesse Roberts. "RL+ Transformer= A General-Purpose Problem Solver." arXiv preprint arXiv:2501.14176 (2025).

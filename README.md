@@ -13,6 +13,8 @@ theme and is deployed to GitHub Pages by GitHub Actions.
 | Goal trackers (homepage) | targets in `_data/goals.yml`; live numbers in `_data/stats.yml` (auto, daily) |
 | Strava / Goodreads widgets | `_includes/widgets/` |
 | Publications list | `_data/publications.yml`, mirrored from Google Scholar daily (`_data/citations.csv` is the fallback) |
+| Which papers are featured / venue order | `_data/venues.yml` (ICORE A* → journals → A/B/C → unranked → preprints; tiers never shown) and per-paper tweaks in `_data/publication_overrides.yml`, applied at build by `_plugins/publications.rb` |
+| CV publications | same Scholar list, chronological (`_includes/cv-publications.html`) |
 | Courses | `_teaching/` |
 | Interactive demos | files in `assets/demonstrations/`, listed in `_data/demos.yml` (shown on `/learn/`) |
 | Torch Canvas page | `/tools/torch-canvas/` (`_pages/torch-canvas.html`); text and features in `_data/torch_canvas.yml` |
