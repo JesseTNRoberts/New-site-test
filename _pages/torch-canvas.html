@@ -28,22 +28,86 @@ excerpt: "Torch Canvas: a visual editor for neural networks that writes PyTorch 
 
 {% if lib %}
 <h2 id="models">Start from a real model</h2>
-<p class="tc-lede">Each one opens in the editor, ready to explore, change, and export. {{ lib.networks.size }} networks and {{ lib.blocks.size }} building blocks, straight from the project's example library.</p>
+<p class="tc-lede">Each one opens in the editor, ready to explore, change, and export. {{ lib.networks.size }} networks and {{ lib.blocks.size }} building blocks, straight from the project's example library. A few favorites first, then <a href="#browse">everything by category</a>.</p>
 
 <div class="tc-grid tc-grid--featured">
   {% for id in tc.featured %}{% assign m = lib.networks | where: "id", id | first %}{% if m %}{% include tc-model-card.html model=m %}{% endif %}{% endfor %}
 </div>
 
-<h3 class="tc-subhead">More networks</h3>
-<div class="tc-grid">
-  {% for m in lib.networks %}{% unless tc.featured contains m.id %}{% include tc-model-card.html model=m %}{% endunless %}{% endfor %}
+{% assign cats = site.data.torch_canvas_categories %}
+<h2 id="browse">Browse all {{ all.size }} examples</h2>
+<div class="tc-tools">
+  <label class="sr-only" for="tc-search">Search examples</label>
+  <input id="tc-search" class="library-search" type="search" placeholder="Search by name or what's inside (attention, BatchNorm, LSTM…)" autocomplete="off">
+  <div class="library-filters" role="group" aria-label="Filter by category">
+    <button type="button" class="chip is-active" data-cat="">All</button>
+    {% for c in cats %}<button type="button" class="chip" data-cat="{{ c.id }}">{{ c.title }} <span class="tc-chip-count">{{ c.networks.size | plus: c.blocks.size }}</span></button>
+    {% endfor %}
+  </div>
 </div>
 
-<h3 class="tc-subhead" id="blocks">Building blocks</h3>
-<p class="tc-lede">Reusable pieces the networks are made of. Open one to see inside, or drop it into your own model.</p>
-<div class="tc-grid tc-grid--blocks">
-  {% for m in lib.blocks %}{% include tc-model-card.html model=m compact=true %}{% endfor %}
+<div id="tc-catalog">
+{% for c in cats %}
+<section class="tc-cat" id="cat-{{ c.id }}" data-cat="{{ c.id }}">
+  <h3 class="tc-cat__title"><i class="{{ c.icon }}" aria-hidden="true"></i> {{ c.title }}</h3>
+  {% if c.blurb != "" %}<p class="tc-lede">{{ c.blurb }}</p>{% endif %}
+  {% if c.networks.size > 0 %}
+  <div class="tc-grid">
+    {% for m in c.networks %}{% assign uses = m.blocks | join: ' ' %}<div class="tc-item" data-search="{{ m.title | append: ' ' | append: m.id | append: ' ' | append: m.description | append: ' ' | append: uses | downcase | escape }}">{% include tc-model-card.html model=m %}</div>{% endfor %}
+  </div>
+  {% endif %}
+  {% if c.blocks.size > 0 %}
+  <p class="tc-cat__label">Building blocks</p>
+  <div class="tc-grid tc-grid--blocks">
+    {% for m in c.blocks %}<div class="tc-item" data-search="{{ m.title | append: ' ' | append: m.id | append: ' ' | append: m.description | downcase | escape }}">{% include tc-model-card.html model=m compact=true %}</div>{% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endfor %}
+<p class="tc-empty" hidden>No examples match that search.</p>
 </div>
+
+<script>
+  (function () {
+    var search = document.getElementById('tc-search');
+    var root = document.getElementById('tc-catalog');
+    if (!search || !root) return;
+    var chips = document.querySelectorAll('.tc-tools .chip');
+    var sections = root.querySelectorAll('.tc-cat');
+    var empty = root.querySelector('.tc-empty');
+    var cat = '';
+    function apply() {
+      var words = search.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var total = 0;
+      sections.forEach(function (sec) {
+        var inCat = !cat || sec.dataset.cat === cat;
+        var shown = 0;
+        sec.querySelectorAll('.tc-item').forEach(function (el) {
+          var ok = inCat && words.every(function (w) { return el.dataset.search.indexOf(w) !== -1; });
+          el.hidden = !ok;
+          if (ok) shown++;
+        });
+        sec.querySelectorAll('.tc-grid, .tc-cat__label').forEach(function (g) {
+          var grid = g.classList.contains('tc-grid') ? g : g.nextElementSibling;
+          var any = grid && Array.prototype.some.call(grid.querySelectorAll('.tc-item'), function (el) { return !el.hidden; });
+          g.hidden = !any;
+        });
+        sec.hidden = shown === 0;
+        total += shown;
+      });
+      empty.hidden = total !== 0;
+    }
+    search.addEventListener('input', apply);
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        cat = chip.dataset.cat;
+        apply();
+      });
+    });
+  })();
+</script>
 {% endif %}
 
 <h2 id="features">What it does</h2>

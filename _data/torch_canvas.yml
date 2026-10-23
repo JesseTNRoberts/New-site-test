@@ -57,3 +57,39 @@ features:
       GPT-2, BERT, Llama 2 and Qwen2.5-VL match their reference implementations: the same parameter
       counts at full size, and the same outputs with the weights copied across (GPT-2 against nanoGPT;
       the others against Hugging Face transformers).
+
+# Categories for the example list on the Torch Canvas page, in display order. Each example (network
+# or block) goes in the first category whose `match` words appear in its id; list an id under `ids`
+# to place it by hand. Examples that match nothing appear under "More examples", so a new example
+# in the torch-canvas repo always shows up. Assigned at build time by _plugins/torch_canvas.rb.
+categories:
+  - id: mlps
+    title: MLPs and residual basics
+    icon: fas fa-layer-group
+    blurb: Small fully connected networks for seeing how depth, activations, normalization and residuals behave.
+    match: [mlp, linear_relu, gated, swiglu]
+  - id: cnns
+    title: Convolutional networks
+    icon: fas fa-th
+    blurb: Image classification, detection and segmentation built from convolutions.
+    match: [cnn, resnet, yolo, darknet, unet]
+  - id: sequence
+    title: Recurrent and state-space models
+    icon: fas fa-redo
+    blurb: Networks that carry a state through a sequence, from the Elman RNN to Mamba.
+    match: [rnn, lstm, gru, mamba]
+  - id: transformers
+    title: Transformers and language models
+    icon: fas fa-align-left
+    blurb: The original encoder-decoder Transformer and the language models built on it.
+    match: [transformer, gpt, bert, llama]
+  - id: vision
+    title: Vision transformers and multimodal
+    icon: fas fa-eye
+    blurb: Transformers that read images, alone or together with text.
+    match: [vit, qwen]
+  - id: generative
+    title: Generative and self-supervised
+    icon: fas fa-magic
+    blurb: Models that learn without labels, by reconstructing their input or predicting hidden parts of it.
+    match: [vae, jepa]
