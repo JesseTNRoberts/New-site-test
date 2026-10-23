@@ -2,7 +2,7 @@
   One paper from the Scholar mirror. Params: paper, order (position in date order).
 {% endcomment %}
 {% assign p = include.paper %}
-{% assign authors = p.authors | replace: "J Roberts", "<strong>J Roberts</strong>" | replace: "JT Roberts", "<strong>JT Roberts</strong>" %}
+{% assign authors = p.authors | replace: "J Roberts", "<strong>J Roberts</strong>" | replace: "JT Roberts", "<strong>JT Roberts</strong>" | replace: "JTN Roberts", "<strong>JTN Roberts</strong>" %}
 <li class="pub" id="{{ p.key }}"
   data-order="{{ include.order }}" data-year="{{ p.sort_year }}" data-year-label="{% if p.year %}{{ p.year }}{% else %}Undated{% endif %}"
   data-cites="{{ p.cited_by }}" data-tier="{{ p.tier }}">

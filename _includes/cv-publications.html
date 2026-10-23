@@ -11,7 +11,7 @@
 {% if this_year != last_year %}{% unless forloop.first %}</ul>{% endunless %}
 <h3 class="cv-pub-year">{{ this_year }}</h3>
 <ul class="cv-pubs">{% assign last_year = this_year %}{% endif %}
-  {% assign authors = p.authors | replace: "J Roberts", "<strong>J Roberts</strong>" | replace: "JT Roberts", "<strong>JT Roberts</strong>" %}
+  {% assign authors = p.authors | replace: "J Roberts", "<strong>J Roberts</strong>" | replace: "JT Roberts", "<strong>JT Roberts</strong>" | replace: "JTN Roberts", "<strong>JTN Roberts</strong>" %}
   {% assign a_last = p.authors | strip | slice: -1 %}
   <li>{% if p.authors != "" %}{{ authors | strip }}{% unless a_last == "." or a_last == "…" %}.{% endunless %} {% endif %}{% assign t_last = p.title | strip | slice: -1 %}“{% if p.url %}<a href="{{ p.url }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}{% unless t_last == "." or t_last == "?" or t_last == "!" %}.{% endunless %}”{% if p.venue != "" %} <em>{{ p.venue }}</em>{% if p.year %},{% endif %}{% endif %}{% if p.year %} {{ p.year }}{% endif %}.{% if p.cited_by > 0 %} Cited by {{ p.cited_by }}.{% endif %}{% if p.note %} <strong>{{ p.note }}.</strong>{% endif %}</li>
 {% if forloop.last %}</ul>{% endif %}

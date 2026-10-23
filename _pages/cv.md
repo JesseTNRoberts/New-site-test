@@ -1,26 +1,22 @@
 ---
 layout: cv
-title: "Jesse Roberts"
+title: "CV"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
 
-<!--
-<object data="{{ site.url }}/files/CV.pdf" width="1000" height="1000" type='application/pdf'/> -->
-{% include base_path %} 
- 
- <br/><br/>
-
-
 # Jesse Roberts
 
-Assistant Professor 
+Assistant Professor, Tennessee Tech University
 
 <div id="webaddress">
-<a href="Jesse.TN.Roberts@gmail.com">Jesse.TN.Roberts@gmail.com</a>
-| <a href="https://JesseTNRoberts.com">My Webpage</a>
+Cookeville, TN
+· <a href="mailto:Jesse.TN.Roberts@gmail.com">Jesse.TN.Roberts@gmail.com</a>
+· <a href="https://www.jessetnroberts.com">jessetnroberts.com</a>
+· <a href="{{ site.author.googlescholar }}">Google Scholar</a>
+· <a href="https://github.com/{{ site.author.github }}">GitHub</a>
 </div>
 
 

@@ -65,18 +65,26 @@ jobs:
           if [ "$new" != "$old" ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; echo "::notice title=torch-canvas::New commit ${new:0:7}; syncing examples"
           else echo "::notice title=torch-canvas::Examples up to date (${new:0:7})"; fi
 
+      # Headless Chromium: renders the CV PDF on every build, and Torch Canvas thumbnails when needed.
       - uses: actions/setup-node@v4
-        if: steps.tc.outputs.changed == 'true'
         with:
           node-version: 20
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-1.56.1-${{ runner.os }}
+
+      - name: Set up Playwright
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pw" playwright@1.56.1
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
 
       - name: Sync Torch Canvas examples
         if: steps.tc.outputs.changed == 'true'
         continue-on-error: true
         run: |
           (cd "$RUNNER_TEMP/torch-canvas" && npm run build)   # bake the current examples into index.html
-          npm install --prefix "$RUNNER_TEMP/pw" playwright@1.56.1
-          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node scripts/sync_torch_canvas.js "$RUNNER_TEMP/torch-canvas"
 
       # On scheduled/manual runs, commit refreshed data so the repo keeps the latest numbers (and a
@@ -120,6 +128,15 @@ jobs:
           bundle exec jekyll build --config _config.yml,_config.deploy.yml --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      # The CV's "Download PDF" button: render /cv/ from this build as a US Letter PDF.
+      - name: Render CV PDF
+        continue-on-error: true
+        run: |
+          origin="${{ steps.pages.outputs.origin }}"
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node scripts/cv_pdf.js _site \
+            "https://${origin#*://}${{ steps.pages.outputs.base_path }}" _site/files/Jesse-Roberts-CV.pdf
+          echo "::notice title=cv::CV PDF rendered ($(du -k _site/files/Jesse-Roberts-CV.pdf | cut -f1) KB)"
 
       - uses: actions/upload-pages-artifact@v3
 
