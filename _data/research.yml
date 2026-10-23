@@ -75,21 +75,19 @@ areas:
     title: Spiking neural networks
     icon: fas fa-bolt
     emerging: true
-    # DRAFT: please review
     summary: >-
-      Brain-inspired networks that compute with discrete spikes over time. This newer line of work
-      builds on earlier research into biologically extending artificial neural networks, and asks
-      how spiking models can be trained and analyzed with the same rigor as conventional deep networks.
-    keywords: [spiking, gen 2 ann]
+      We are studying the fundamentals of spiking neural networks and their use in real-time
+      environments. We are developing capability in this space now and have multiple papers in
+      the works.
+    keywords: [spiking, spike, neuromorphic, gen 2 ann]
 
   - id: tornado
     title: Tornado detection
     icon: fas fa-wind
     emerging: true
-    # DRAFT: please review
     summary: >-
-      Applying deep learning to severe-weather data to detect tornadoes more reliably and earlier,
-      where better detection can directly save lives.
+      We are working on tornado detection in areas where radar sweeps pass well above the ideal
+      range for detecting couplet rotation, as they do across a large portion of Tennessee.
     keywords: [tornado, severe weather, radar]
 
 # Grants: shown on the Research page (Funding) and generated into the CV's Grants section.
