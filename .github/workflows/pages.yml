@@ -40,10 +40,11 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
 
-      # Refresh live numbers (Scholar publications, Strava miles). Failures never block the
-      # deploy: the script keeps the last good numbers for any source that doesn't answer.
+      # Refresh live numbers (Scholar publications, Strava miles) on the daily and manual runs only;
+      # pushes build with the last saved data, which keeps SerpApi use to about one call a day per
+      # repo. Failures never block the deploy: the last good numbers are kept.
       - name: Refresh stats from Google Scholar and Strava
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         run: ruby scripts/update_stats.rb
         env:
