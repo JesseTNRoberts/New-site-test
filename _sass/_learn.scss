@@ -156,24 +156,6 @@
 
 /* ---- Publications: selected list, sort control, venue badges ---- */
 .page__content {
-  .pub-featured {
-    display: grid;
-    gap: 0.75em;
-    margin: 0.75em 0 2em;
-    padding: 0;
-    list-style: none;
-  }
-
-  .pub--featured {
-    margin: 0;
-    padding: 0.9em 1.1em;
-    background: #f6f8fa;
-    border: 1px solid #e3e7eb;
-    border-left: 4px solid $link-color;
-    border-radius: 10px;
-
-    .pub__title { font-size: 1.05em; }
-  }
 
   .pub-sort {
     display: flex;

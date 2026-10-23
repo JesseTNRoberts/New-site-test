@@ -3,9 +3,7 @@
 # Annotates the Google Scholar mirror (_data/publications.yml) at build time:
 #   - each paper gets `tier`, `label` and `note` from _data/venues.yml and
 #     _data/publication_overrides.yml, plus a stable `key` and a numeric `sort_year`;
-#   - hidden papers are dropped;
-#   - site.data["publications"]["featured"] lists papers at or above featured_max_tier
-#     (A* conferences and journals by default), most cited first.
+#   - hidden papers are dropped.
 # Keeping this at build time means editing the rules never needs a new Scholar fetch.
 module JesseSite
   class PublicationTiers < Jekyll::Generator
@@ -47,10 +45,7 @@ module JesseSite
 
       papers.reject! { |p| p["hide"] }
       pubs["papers"] = papers
-      max_tier = (venues["featured_max_tier"] || 1).to_i
-      pubs["featured"] = papers.select { |p| p["tier"] <= max_tier }
-                               .sort_by { |p| [-p["cited_by"], -p["sort_year"]] }
-      Jekyll.logger.info "Publications:", "#{papers.size} papers, #{pubs['featured'].size} featured"
+      Jekyll.logger.info "Publications:", "#{papers.size} papers"
     end
   end
 end

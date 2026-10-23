@@ -1,7 +1,7 @@
 # Per-paper adjustments to the list mirrored from Google Scholar (applied at build time).
 # `title` matches case-insensitively as a substring of the Scholar title.
 #
-#   tier   override the venue tier from _data/venues.yml (1 = A*, 2 = journal; 1-2 are featured)
+#   tier   override the venue tier from _data/venues.yml (1 = A*, 2 = journal, ... 7 = preprint)
 #   label  override the venue badge
 #   note   short note shown with the paper (e.g. an award)
 #   hide   true to leave the paper off the Publications page and CV

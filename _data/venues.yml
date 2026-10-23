@@ -9,8 +9,8 @@
 #   tier 5  ICORE C conferences
 #   tier 6  unranked conferences, symposia and workshops
 #   tier 7  preprints, reports, theses
-# Tiers are never shown on the site. They decide which papers are featured (featured_max_tier)
-# and the order when the Publications page is sorted by Venue.
+# Tiers are never shown on the site. They set the order when the Publications page is sorted
+# by Venue.
 #
 # Each rule: `match` is a case-insensitive substring of Scholar's venue line; the first matching
 # rule wins, so specific rules go first (e.g. ICMLA before ICML, AAAI symposia before AAAI).
@@ -18,7 +18,6 @@
 # Ranks checked on the ICORE portal / ICORE-derived listings, October 2026.
 # To change one paper, use _data/publication_overrides.yml.
 
-featured_max_tier: 2     # "Selected publications" = A* conferences and journals
 default_tier: 6          # a venue no rule matches
 empty_venue_tier: 7      # no venue at all on Scholar
 

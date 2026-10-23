@@ -3,22 +3,14 @@
   scripts/update_stats.rb; tiers, labels and notes added by _plugins/publications.rb from
   _data/venues.yml and _data/publication_overrides.yml).
 
-  - "Selected publications": tier-1 venues (top conferences, journals), most cited first.
-  - "All papers": sortable by date (grouped by year), citations, or venue. Venue sorting orders
-    by tier, then newest first; tiers themselves are never shown.
+  Sortable by date (grouped by year), citations, or venue. Venue sorting orders by tier
+  (ICORE A*, journals, A/B/C, unranked, preprints), then newest first; tiers are never shown.
   Until the first successful Scholar fetch, falls back to the hand-exported _data/citations.csv.
 {% endcomment %}
 {% assign pubs = site.data.publications %}
 {% if pubs and pubs.papers and pubs.papers.size > 0 %}
 
-{% if pubs.featured and pubs.featured.size > 0 %}
-<h2 id="selected">Selected publications</h2>
-<ol class="pub-featured">
-  {% for p in pubs.featured %}{% include pub-item.html paper=p featured=true %}{% endfor %}
-</ol>
-{% endif %}
-
-<h2 id="all">All papers <span class="count">{{ pubs.papers.size }}</span></h2>
+<h2 id="papers">Papers <span class="count">{{ pubs.papers.size }}</span></h2>
 <div class="pub-sort" role="group" aria-label="Sort papers by">
   <span class="pub-sort__label">Sort by</span>
   <button type="button" class="chip is-active" data-sort="date" aria-pressed="true">Date</button>
