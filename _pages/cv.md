@@ -271,6 +271,9 @@ Artificial Intelligence: All Hype or a Revolution? Maryville College.
 
 ### Conference Presentations
 
+`February 2026`
+When Artificial Code Mirrors God's Image: Toward a Post-Anthropocentric Imago Dei. Baylor Symposium on Faith and Culture, "Technology and the Human Person in the Age of AI," Waco, TX.
+
 `May 2025`
 A Few-Shot Learning Method for SMS Phishing Detection and Explanation Using SLMs (poster). IEEE Symposium on Security and Privacy (S&P), San Francisco, CA.
 
