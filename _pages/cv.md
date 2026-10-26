@@ -258,11 +258,18 @@ J. Roberts, "MNFIS+; or, a Better Hybrid Heuristic Maximum Power Point Tracker,"
 
 ## Presentations
 
+### Invited Talks
+
+`October 2026`
+How Generative AI Really Works. Chattanooga State Community College. [Slides]({{ '/assets/talks/how-generative-ai-really-works.html' | relative_url }})
+
 `April 2026`
-Foundation Models and Responsible AI at TN-THRIVE-AI 
+Foundation Models and Responsible AI. TN-THRIVE-AI.
+
+### Conference Presentations
 
 `May 2025`
-Poster: A Few-Shot Learning Method for SMS Phishing Detection and Explanation Using SLMs
+A Few-Shot Learning Method for SMS Phishing Detection and Explanation Using SLMs (poster). IEEE Symposium on Security and Privacy (S&P), San Francisco, CA.
 
 Seyed Mohammad Sanjari, Jesse Roberts, Mir Mehedi A. Pritom
 
