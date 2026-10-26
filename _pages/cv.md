@@ -266,6 +266,9 @@ How Generative AI Really Works. Chattanooga State Community College. [Slides]({{
 `April 2026`
 Foundation Models and Responsible AI. TN-THRIVE-AI.
 
+`November 2024`
+Artificial Intelligence: All Hype or a Revolution? Maryville College.
+
 ### Conference Presentations
 
 `May 2025`
