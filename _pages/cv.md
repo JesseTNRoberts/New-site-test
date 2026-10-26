@@ -271,6 +271,9 @@ Artificial Intelligence: All Hype or a Revolution? Maryville College.
 
 ### Conference Presentations
 
+`November 2026`
+Upcoming talk on AI. National Collegiate Honors Council (NCHC) Annual Conference, New Orleans, LA.
+
 `February 2026`
 When Artificial Code Mirrors God's Image: Toward a Post-Anthropocentric Imago Dei. Baylor Symposium on Faith and Culture, "Technology and the Human Person in the Age of AI," Waco, TX.
 
