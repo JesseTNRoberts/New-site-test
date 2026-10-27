@@ -295,6 +295,8 @@
     border-radius: 3px 3px 0 0;
   }
 
+  .cite-chart__bar.is-zero { background: #d5d9de; }
+
   .cite-chart__col.is-current .cite-chart__bar {
     background: repeating-linear-gradient(-45deg, #777 0 4px, #9a9a9a 4px 8px);
   }
