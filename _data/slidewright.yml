@@ -1,0 +1,52 @@
+# Slidewright: the tool (separate repo, served at /slidewright/) and how the site features it.
+# The site's page about it is _pages/slidewright.html at /tools/slidewright/.
+# Never create /slidewright/ in this repo, because the app itself is served there.
+
+tool:
+  title: Slidewright
+  url: /slidewright/               # the app itself (do not create this path in this repo)
+  page: /tools/slidewright/        # the site's page about it (_pages/slidewright.html)
+  repo: https://github.com/JesseTNRoberts/slidewright
+  tagline: "Edit reveal.js slide decks visually"
+  description: >-
+    Slidewright is a minimalist editor for reveal.js presentations. Open an HTML deck, change it
+    right on the slide, and save it back as the same kind of file. The deck's own scripts and styles
+    stay untouched, so it still presents and exports to PDF as before. It runs in the browser with
+    nothing to install.
+
+# What it does (from the repo's README). Shown on the Slidewright page.
+features:
+  - icon: fas fa-arrows-alt
+    title: Edit on the slide
+    text: >-
+      Drag, resize and rotate anything, with snapping to the slide and to other items. Alt-drag a
+      corner to scale an item with its text and padding together.
+  - icon: fas fa-i-cursor
+    title: Type where the text is
+    text: >-
+      Click into any text and type. Double-click a card or group to work inside it. Edit fill,
+      border and font, and group, align, layer or duplicate items.
+  - icon: fas fa-image
+    title: Paste in images
+    text: >-
+      Paste a screenshot or drop image files straight onto a slide.
+  - icon: fas fa-universal-access
+    title: Check alt text
+    text: >-
+      See the alt text on every picture, spot the ones that have none, and write it or mark the
+      picture as decorative.
+  - icon: fas fa-layer-group
+    title: Slides and build steps
+    text: >-
+      Add, duplicate, reorder and delete slides, with speaker notes and find and replace. Edit each
+      click step of a slide and copy a change to the other steps.
+  - icon: fas fa-undo
+    title: Undo anything, then present
+    text: >-
+      Undo and redo cover every change, including slide changes. Present from the current slide
+      when you're ready.
+
+# How saving works, shown under the features.
+saving: >-
+  In Chrome and Edge, Save writes straight back to the file you opened. Other browsers download a
+  copy. The app is a single HTML file with no build step and no dependencies.
