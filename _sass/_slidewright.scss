@@ -62,6 +62,34 @@ $sw-paper: #faf6f0;
     }
   }
 
+  .sw-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin: 0 0 1em;
+
+    a {
+      padding: 0.3em 0.8em;
+      font-size: $type-size-6;
+      color: $sw-ink;
+      text-decoration: none;
+      background: $sw-paper;
+      border: 1px solid mix($sw-wood, #fff, 30%);
+      border-radius: 999px;
+
+      &:hover,
+      &:focus {
+        border-color: $sw-wood;
+      }
+    }
+  }
+
+  .sw-license {
+    margin-top: 2em;
+    font-size: $type-size-6;
+    color: $gray;
+  }
+
   @media (max-width: 600px) {
     .sw-hero {
       flex-direction: column;

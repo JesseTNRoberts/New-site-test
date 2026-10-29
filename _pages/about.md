@@ -43,7 +43,7 @@ I build browser-based tools for teaching machine learning. The main one is [Torc
 
 See [everything it can open]({{ '/tools/torch-canvas/' | relative_url }}), from a 10-layer MLP to Qwen2.5-VL.
 
-The newest is [Slidewright]({{ '/tools/slidewright/' | relative_url }}), a minimalist editor for reveal.js presentations. Open an HTML deck, drag, resize and type right on the slide, check that every picture has alt text, and save it back as the same file.
+The newest is [Slidewright]({{ '/tools/slidewright/' | relative_url }}), a minimalist editor for reveal.js presentations. Open an HTML deck and edit it right on the slide, with equations, code and layouts that match the deck. It checks accessibility with a score modeled on campus tools, presents with a pen and laser pointer, and saves back to the same file or to GitHub.
 
 <a class="btn btn--primary" href="/slidewright/">Open Slidewright</a>
 
