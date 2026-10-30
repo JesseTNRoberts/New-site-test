@@ -21,10 +21,12 @@
   {% endunless %}
 
   {% if a %}
+  {% if count > 0 %}
   <p class="rail-stats">
     <span><strong>{{ count }}</strong> {% if count == 1 %}paper{% else %}papers{% endif %}</span>
     {% if cites > 0 %}<span><strong>{{ cites }}</strong> citations</span>{% endif %}
   </p>
+  {% endif %}
   {% else %}
   {% assign m = pubs.metrics %}
   <p class="rail-stats">
