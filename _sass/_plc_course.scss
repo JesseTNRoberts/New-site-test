@@ -46,6 +46,12 @@ $plc-line: #d3e0d8;
   .plc-shot {
     margin: 0 0 2em;
 
+    /* figure is a flex box in the theme, so the link has to take the full width. */
+    > a {
+      display: block;
+      width: 100%;
+    }
+
     img {
       display: block;
       width: 100%;
@@ -65,7 +71,7 @@ $plc-line: #d3e0d8;
   .plc-steps,
   .plc-notes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: 1em;
     margin: 1em 0 1em;
   }
