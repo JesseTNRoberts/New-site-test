@@ -4,23 +4,22 @@
 #
 # Each offering's `id` is the value the Request button preselects in the form.
 
-headline: "I help universities and companies use AI well."
+headline: "I help companies use AI well."
 
 intro: >-
-  I'm an Assistant Professor of Computer Science at Tennessee Tech University, where I research how
-  AI systems learn and reason and teach students and faculty to use them. I bring that work to
-  organizations through talks, hands-on workshops, and AI audits and consulting.
+  I'm an Assistant Professor of Computer Science at Tennessee Tech. I research how AI learns and
+  reasons, and I help organizations put it to work.
 
 offerings:
   - id: talk
     name: Talks
     single: Talk
     button: Request a talk
-    service: AI talks and keynotes
+    service: AI talks
     icon: fas fa-microphone
     for: "Universities, conferences, professional groups and community events."
     what: >-
-      Keynotes, guest lectures and panels on AI, pitched to your audience, whether technical or general.
+      Talks, guest lectures and panels on AI, pitched to your audience, whether technical or general.
     length: "30 to 60 minutes, plus Q&amp;A"
     topics_label: "Sample topics"
     topics:
