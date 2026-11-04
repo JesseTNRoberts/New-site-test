@@ -1,20 +1,20 @@
 ---
 layout: single
-title: "Work With Me"
-permalink: /work-with-me/
+title: "Services"
+permalink: /services/
 author_profile: true
-seo_title: "Work With Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
-description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, an AI workshop or AI consulting. Based in Cookeville, serving Nashville and all of Tennessee."
-# photo: /images/work-with-me.jpg
+seo_title: "Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
+description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for a talk, a workshop or an AI audit. Based in Cookeville, serving Nashville and Tennessee."
+# photo: /images/services.jpg
 # photo_alt: "Jesse Roberts giving a talk"
 ---
 {% comment %}
-  Talks, workshops and AI consulting. Text lives in _data/work_with_me.yml.
+  Talks, workshops, and AI audits and consulting. Text lives in _data/services.yml.
   This is a service inquiry, kept separate from Meeting Request (office hours, Calendly).
   The form posts to FormSubmit, which emails Jesse. Each card's Request button links
   ?offering=<id>#request and the small script below preselects that offering.
 {% endcomment %}
-{% assign w = site.data.work_with_me %}
+{% assign w = site.data.services %}
 
 <header class="ww-hero">
   <div class="ww-hero__text">
@@ -74,10 +74,10 @@ description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, an AI 
 <p>Tell me a little about what you have in mind and I'll follow up by email. To talk with me as a student or colleague, use <a href="{{ '/meeting/' | relative_url }}">Meeting Request</a> instead.</p>
 
 <form class="ww-form" action="https://formsubmit.co/{{ w.form_email }}" method="POST">
-  <input type="hidden" name="_subject" value="Work With Me request from jessetnroberts.com">
+  <input type="hidden" name="_subject" value="Services request from jessetnroberts.com">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="{{ site.url }}{{ site.baseurl }}/work-with-me/?sent=1#request">
+  <input type="hidden" name="_next" value="{{ site.url }}{{ site.baseurl }}/services/?sent=1#request">
   <input type="text" name="_honey" class="ww-form__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <div class="ww-form__row">
@@ -102,7 +102,7 @@ description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, an AI 
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Jesse Roberts, AI talks, workshops and consulting",
+  "name": "Jesse Roberts, AI talks, workshops, audits and consulting",
   "url": {{ page.url | absolute_url | jsonify }},
   "description": {{ page.description | jsonify }},
   "provider": { "@type": "Person", "name": "Jesse Roberts", "jobTitle": "Assistant Professor of Computer Science", "worksFor": { "@type": "CollegeOrUniversity", "name": "Tennessee Tech University" } },
@@ -110,8 +110,8 @@ description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, an AI 
   "areaServed": [{ "@type": "State", "name": "Tennessee" }, { "@type": "City", "name": "Nashville" }, { "@type": "City", "name": "Cookeville" }],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "AI talks, workshops and consulting",
-    "itemListElement": [{% for o in site.data.work_with_me.offerings %}
+    "name": "AI talks, workshops, audits and consulting",
+    "itemListElement": [{% for o in site.data.services.offerings %}
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": {{ o.service | jsonify }}, "description": {{ o.what | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
     ]
   }

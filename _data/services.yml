@@ -1,4 +1,4 @@
-# Work With Me page (_pages/work-with-me.html).
+# Services page (_pages/services.html).
 # Site writing rules apply to every string here. No em dashes, colons or semicolons
 # (official talk titles keep their own punctuation).
 #
@@ -9,7 +9,7 @@ headline: "I help universities and companies use AI well."
 intro: >-
   I'm an Assistant Professor of Computer Science at Tennessee Tech University, where I research how
   AI systems learn and reason and teach students and faculty to use them. I bring that work to
-  organizations through talks, hands-on workshops and practical AI consulting.
+  organizations through talks, hands-on workshops, and AI audits and consulting.
 
 offerings:
   - id: talk
@@ -40,25 +40,26 @@ offerings:
       tools for a team's daily work.
     length: "Half day or full day"
 
-  - id: consulting
-    name: AI Consulting
-    single: AI Consulting
-    button: Request AI consulting
-    service: AI consulting and adoption planning
+  - id: audit
+    name: AI Audits & Consulting
+    single: AI Audit & Consulting
+    button: Request an AI audit
+    service: AI audits and consulting
     icon: fas fa-clipboard-check
     for: "Companies and organizations."
     what: >-
-      A review of where AI could help, the risks to watch, and a practical plan for adoption.
+      An audit of where AI could help your organization and the risks to watch, then a practical
+      plan for adoption, with ongoing help if you want it.
     length: "Scoped per engagement"
 
-# Proof. Consulting clients stay unnamed (Jesse, 2026-11-04). Name the sectors only.
+# Proof. Audit and consulting clients stay unnamed (Jesse, 2026-11-04). Name the sectors only.
 worked_with:
   - "Tennessee Tech University"
   - "National Collegiate Honors Council (NCHC)"
   - "Chattanooga State Community College"
   - "Maryville College"
   - "TN-THRIVE-AI"
-audits_note: "AI consulting for three organizations, in healthcare, lending and banking, and manufacturing."
+audits_note: "AI audits and consulting for three organizations, in healthcare, lending and banking, and manufacturing."
 
 # Past talks, newest first. Keep in step with the CV's Presentations section.
 past_talks:
