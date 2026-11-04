@@ -21,8 +21,11 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
 <header class="ww-hero">
   <div class="ww-hero__text">
     <p class="ww-hero__headline">{{ w.headline }}</p>
-    <p class="ww-hero__intro">{{ w.intro }}</p>
-    <p class="ww-hero__where">AI speaker, workshop leader and consultant based in Cookeville, Tennessee, working with groups in Nashville, across the state and online.</p>
+    <p class="ww-hero__intro">{{ w.subhead }}</p>
+    <p class="ww-hero__actions">
+      {% for b in w.hero_buttons %}<a class="btn btn--{{ b.style }} btn--large{% if b.offering %} ww-offer__btn{% endif %}" href="{% if b.offering %}?offering={{ b.offering }}#request{% else %}{{ b.href }}{% endif %}"{% if b.offering %} data-offering="{{ b.offering }}"{% endif %}>{{ b.label }}</a>{% endfor %}
+    </p>
+    <p class="ww-hero__where"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> {{ w.where }}</p>
   </div>
   {% if page.photo %}
   <img class="ww-hero__photo" src="{{ page.photo | relative_url }}" alt="{{ page.photo_alt | default: 'Jesse Roberts' }}">
@@ -32,36 +35,33 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
 <h2 id="offerings">How I can help</h2>
 <div class="ww-offers">
   {% for o in w.offerings %}
-  <section class="ww-offer" aria-labelledby="ww-{{ o.id }}">
+  <section class="ww-offer{% if forloop.first %} ww-offer--main{% endif %}" aria-labelledby="ww-{{ o.id }}">
     <h3 id="ww-{{ o.id }}"><i class="{{ o.icon }}" aria-hidden="true"></i> {{ o.name }}</h3>
-    <dl class="ww-offer__facts">
-      <dt>Who it's for</dt><dd>{{ o.for }}</dd>
-      <dt>What you get</dt><dd>{{ o.what }}</dd>
-      <dt>How long</dt><dd>{{ o.length }}</dd>
-    </dl>
-    {% if o.topics %}
-    <p class="ww-offer__label">{{ o.topics_label }}</p>
-    <ul class="ww-offer__topics">
-      {% for t in o.topics %}<li>{{ t }}</li>{% endfor %}
+    <p class="ww-offer__pitch">{{ o.pitch }}</p>
+    <ul class="ww-offer__points">
+      {% for pt in o.points %}<li>{{ pt }}</li>{% endfor %}
     </ul>
-    {% endif %}
+    <p class="ww-offer__meta">{{ o.meta }}</p>
     <a class="btn btn--primary ww-offer__btn" href="?offering={{ o.id }}#request" data-offering="{{ o.id }}">{{ o.button }}</a>
   </section>
   {% endfor %}
 </div>
 
-<h2 id="experience">Where I've worked</h2>
-<ul class="ww-orgs">
-  {% for org in w.worked_with %}<li>{{ org }}</li>{% endfor %}
-</ul>
-<p>{{ w.audits_note }}</p>
-
-<h3 class="ww-sub">Recent talks</h3>
-<ul class="ww-talks">
-  {% for t in w.past_talks %}
-  <li>{% if t.url %}<a href="{{ t.url | relative_url }}">{{ t.title }}</a>{% else %}{{ t.title }}{% endif %} <span>{{ t.where }}</span></li>
-  {% endfor %}
-</ul>
+<h2 id="experience">Experience</h2>
+<div class="ww-proof">
+  <div>
+    <h3 class="ww-proof__title">Industries I've worked with</h3>
+    <ul class="ww-chips ww-chips--strong">
+      {% for ind in w.industries %}<li><i class="{{ ind.icon }}" aria-hidden="true"></i> {{ ind.name }}</li>{% endfor %}
+    </ul>
+  </div>
+  <div>
+    <h3 class="ww-proof__title">Where I've spoken</h3>
+    <ul class="ww-chips">
+      {% for org in w.spoken_at %}<li>{{ org }}</li>{% endfor %}
+    </ul>
+  </div>
+</div>
 
 {% if w.testimonials.size > 0 %}
 <div class="ww-quotes">
@@ -71,9 +71,9 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
 </div>
 {% endif %}
 
-<h2 id="request">Send a request</h2>
-<div class="notice--success ww-sent" id="ww-sent" hidden>Thanks, your request is on its way. I'll reply by email, usually within a few days.</div>
-<p>Tell me a little about what you have in mind and I'll follow up by email. To talk with me as a student or colleague, use <a href="{{ '/meeting/' | relative_url }}">Meeting Request</a> instead.</p>
+<h2 id="request">Get in touch</h2>
+<div class="notice--success ww-sent" id="ww-sent" hidden>Thanks, your request is on its way. I'll reply by email.</div>
+<p class="ww-form__lede">A few details are enough. I'll reply by email.</p>
 
 <form class="ww-form" action="https://formsubmit.co/{{ w.form_email }}" method="POST">
   <input type="hidden" name="_subject" value="Services request from jessetnroberts.com">
@@ -96,7 +96,7 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
     </label>
   </div>
   <label>Rough dates <input type="text" name="dates" placeholder="For example, sometime in March, or a specific day"></label>
-  <label>A short note <textarea name="note" rows="4" placeholder="Your audience or team, what you hope to get out of it, and anything else that helps"></textarea></label>
+  <label>A short note <textarea name="note" rows="4" placeholder="Your team or audience, and what you hope to get out of it"></textarea></label>
   <button type="submit" class="btn btn--primary btn--large">Send request</button>
 </form>
 
