@@ -3,13 +3,13 @@ layout: single
 title: "Work With Me"
 permalink: /work-with-me/
 author_profile: true
-seo_title: "Work With Jesse Roberts - AI Speaker, Workshops and Audits in Tennessee"
-description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, a hands-on AI workshop or an AI audit. Based in Cookeville, serving Nashville and all of Tennessee."
+seo_title: "Work With Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
+description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, an AI workshop or AI consulting. Based in Cookeville, serving Nashville and all of Tennessee."
 # photo: /images/work-with-me.jpg
 # photo_alt: "Jesse Roberts giving a talk"
 ---
 {% comment %}
-  Talks, workshops and AI audits. Text lives in _data/work_with_me.yml.
+  Talks, workshops and AI consulting. Text lives in _data/work_with_me.yml.
   This is a service inquiry, kept separate from Meeting Request (office hours, Calendly).
   The form posts to FormSubmit, which emails Jesse. Each card's Request button links
   ?offering=<id>#request and the small script below preselects that offering.
@@ -102,7 +102,7 @@ description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, a hand
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Jesse Roberts, AI talks, workshops and audits",
+  "name": "Jesse Roberts, AI talks, workshops and consulting",
   "url": {{ page.url | absolute_url | jsonify }},
   "description": {{ page.description | jsonify }},
   "provider": { "@type": "Person", "name": "Jesse Roberts", "jobTitle": "Assistant Professor of Computer Science", "worksFor": { "@type": "CollegeOrUniversity", "name": "Tennessee Tech University" } },
@@ -110,7 +110,7 @@ description: "Book AI speaker Jesse Roberts of Tennessee Tech for a talk, a hand
   "areaServed": [{ "@type": "State", "name": "Tennessee" }, { "@type": "City", "name": "Nashville" }, { "@type": "City", "name": "Cookeville" }],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "AI talks, workshops and audits",
+    "name": "AI talks, workshops and consulting",
     "itemListElement": [{% for o in site.data.work_with_me.offerings %}
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": {{ o.service | jsonify }}, "description": {{ o.what | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
     ]

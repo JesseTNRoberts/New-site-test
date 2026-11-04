@@ -12,7 +12,7 @@ main:
     url: /apps/
     menu: apps
 
-  # Talks, workshops and AI audits for outside groups. Separate from Meeting Request (office hours).
+  # Talks, workshops and AI consulting for outside groups. Separate from Meeting Request (office hours).
   - title: "Work With Me"
     url: /work-with-me/
 
