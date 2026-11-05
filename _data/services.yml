@@ -84,11 +84,12 @@ industries:
     icon: fas fa-university
 
 # Common questions, shown collapsed and also as FAQPage structured data for search.
-# Claude's drafts from what the page already says (2026-11-04). Jesse to correct or replace.
+# Claude's drafts from what the page already says (2026-11-04), except the audit answer, which is Jesse's. Jesse to correct or replace.
 # Keep answers to one or two short sentences.
 faq:
   - q: "What does an AI audit include?"
-    a: "A look at where AI could save your organization time or money, the risks to watch, and how your processes and structure could change to make the most of it. You get a practical plan for adoption."
+    # Jesse's own definition (2026-11-04). Keep his wording.
+    a: "An AI audit is a customized investigation of processes and pain points to understand how a company does business and how the technology involved is used and interconnected. The goal is to understand where AI may provide leverage and how the process might change to provide more opportunities."
   - q: "Is the first consultation really free?"
     a: "Yes, for Tennessee businesses. It's a short conversation about your goals and whether an audit makes sense."
   - q: "Do you work with organizations outside Tennessee?"

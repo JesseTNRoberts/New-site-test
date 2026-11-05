@@ -120,7 +120,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
     "@type": "OfferCatalog",
     "name": "AI talks, workshops, audits and consulting",
     "itemListElement": [{% for o in site.data.services.offerings %}
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": {{ o.service | jsonify }}, "description": {{ o.what | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": {{ o.service | jsonify }}, "description": {{ o.pitch | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
     ]
   }
 }
