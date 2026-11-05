@@ -6,7 +6,7 @@ permalink: /services/
 sitemap: false
 author_profile: true
 seo_title: "Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
-description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for a talk, a workshop or an AI audit. Based in Cookeville, serving Nashville and Tennessee."
+description: "AI consultant and speaker Jesse Roberts helps companies use AI well. Free AI consultation for Tennessee businesses, plus AI audits, workshops and talks."
 # photo: /images/services.jpg
 # photo_alt: "Jesse Roberts giving a talk"
 ---
@@ -22,6 +22,7 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
   <div class="ww-hero__text">
     <p class="ww-hero__headline">{{ w.headline }}</p>
     <p class="ww-hero__intro">{{ w.subhead }}</p>
+    <p class="ww-hero__offer"><i class="fas fa-gift" aria-hidden="true"></i> {{ w.offer }}</p>
     <p class="ww-hero__actions">
       {% for b in w.hero_buttons %}<a class="btn btn--{{ b.style }} btn--large{% if b.offering %} ww-offer__btn{% endif %}" href="{% if b.offering %}?offering={{ b.offering }}#request{% else %}{{ b.href }}{% endif %}"{% if b.offering %} data-offering="{{ b.offering }}"{% endif %}>{{ b.label }}</a>{% endfor %}
     </p>
@@ -47,21 +48,10 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
   {% endfor %}
 </div>
 
-<h2 id="experience">Experience</h2>
-<div class="ww-proof">
-  <div>
-    <h3 class="ww-proof__title">Industries I've worked with</h3>
-    <ul class="ww-chips ww-chips--strong">
-      {% for ind in w.industries %}<li><i class="{{ ind.icon }}" aria-hidden="true"></i> {{ ind.name }}</li>{% endfor %}
-    </ul>
-  </div>
-  <div>
-    <h3 class="ww-proof__title">Where I've spoken</h3>
-    <ul class="ww-chips">
-      {% for org in w.spoken_at %}<li>{{ org }}</li>{% endfor %}
-    </ul>
-  </div>
-</div>
+<h2 id="experience">Industries I've worked with</h2>
+<ul class="ww-chips ww-chips--strong ww-industries">
+  {% for ind in w.industries %}<li><i class="{{ ind.icon }}" aria-hidden="true"></i> {{ ind.name }}</li>{% endfor %}
+</ul>
 
 {% if w.testimonials.size > 0 %}
 <div class="ww-quotes">
@@ -91,6 +81,7 @@ description: "Book AI speaker and consultant Jesse Roberts of Tennessee Tech for
     <label>Which offering
       <select name="offering" id="ww-offering" required>
         <option value="" disabled selected>Choose one</option>
+        {% for x in w.extra_options %}<option value="{{ x.label }}" data-id="{{ x.id }}">{{ x.label }}</option>{% endfor %}
         {% for o in w.offerings %}<option value="{{ o.single }}" data-id="{{ o.id }}">{{ o.single }}</option>{% endfor %}
       </select>
     </label>

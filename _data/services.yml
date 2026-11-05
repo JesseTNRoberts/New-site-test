@@ -12,13 +12,21 @@ headline: "I help companies use AI well."
 subhead: "AI researcher specializing in large language models, the technology behind tools like ChatGPT."
 where: "Assistant Professor at Tennessee Tech in Cookeville. Working with organizations in Nashville, across Tennessee and online."
 
+# Free first consultation for Tennessee businesses (Jesse, 2026-11-04).
+offer: "Free AI consultation for Tennessee businesses."
+
 hero_buttons:
-  - label: Request an AI audit
-    offering: audit
+  - label: Book a free consultation
+    offering: consult
     style: primary
-  - label: Book a talk or workshop
+  - label: See how I can help
     href: "#offerings"
     style: inverse
+
+# Form options that aren't offering cards. Listed before the cards' options.
+extra_options:
+  - id: consult
+    label: Free consultation (Tennessee businesses)
 
 offerings:
   - id: audit
@@ -34,7 +42,7 @@ offerings:
       - "Process and structure changes"
       - "New uses for machine learning and data science"
       - "A practical plan for adoption"
-    meta: "For companies and organizations. Scoped to you."
+    meta: "For companies and organizations. Scoped to you. Tennessee businesses can start with a free consultation."
 
   - id: workshop
     name: Workshops
@@ -72,15 +80,6 @@ industries:
     icon: fas fa-cogs
   - name: "Finance"
     icon: fas fa-university
-
-# Places Jesse has spoken (talks, not consulting work).
-spoken_at:
-  - "Tennessee Tech University"
-  - "National Collegiate Honors Council"
-  - "Chattanooga State Community College"
-  - "Maryville College"
-  - "TN-THRIVE-AI"
-  - "Baylor Symposium on Faith and Culture"
 
 # Testimonials. Add entries (quote, name, role) when Jesse has them. The section hides while empty.
 testimonials: []
