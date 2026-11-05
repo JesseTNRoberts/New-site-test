@@ -87,7 +87,7 @@ industries:
     icon: fas fa-basketball-ball
 
 # Common questions, shown collapsed and also as FAQPage structured data for search.
-# Claude's drafts from what the page already says (2026-11-04), except the audit and free consultation answers, which are Jesse's. Jesse to correct or replace.
+# Claude's drafts from what the page already says (2026-11-04), except the audit, free consultation and workshop answers, which are Jesse's. Jesse to correct or replace.
 # Keep answers to one or two short sentences.
 faq:
   - q: "What does an AI audit include?"
@@ -101,7 +101,8 @@ faq:
   - q: "What industries have you worked with?"
     a: "Industrial automation, healthcare, manufacturing, finance and professional sports."
   - q: "Can a workshop be built around our team's work?"
-    a: "Yes. Workshops focus on practical AI integration and are built around your group's real tasks."
+    # Jesse's wording (2026-11-04).
+    a: "Yes, workshops can be tailored to your team and work scenario."
 
 # Testimonials. Add entries (quote, name, role) when Jesse has them. The section hides while empty.
 testimonials: []
