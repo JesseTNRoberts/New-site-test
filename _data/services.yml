@@ -8,6 +8,8 @@
 # Each offering's `id` is the value its Request button preselects in the form.
 # The first offering is the main one and gets the featured style.
 
+# Small label above the headline, inside the h1, so the main heading carries search words.
+kicker: "AI Consulting in Tennessee"
 headline: "I help companies use AI well."
 subhead: "AI researcher specializing in large language models, the technology behind tools like ChatGPT."
 where: "Assistant Professor at Tennessee Tech in Cookeville. Working with organizations in Nashville, across Tennessee and online."
@@ -80,6 +82,21 @@ industries:
     icon: fas fa-cogs
   - name: "Finance"
     icon: fas fa-university
+
+# Common questions, shown collapsed and also as FAQPage structured data for search.
+# Claude's drafts from what the page already says (2026-11-04). Jesse to correct or replace.
+# Keep answers to one or two short sentences.
+faq:
+  - q: "What does an AI audit include?"
+    a: "A look at where AI could save your organization time or money, the risks to watch, and how your processes and structure could change to make the most of it. You get a practical plan for adoption."
+  - q: "Is the first consultation really free?"
+    a: "Yes, for Tennessee businesses. It's a short conversation about your goals and whether an audit makes sense."
+  - q: "Do you work with organizations outside Tennessee?"
+    a: "Yes. I'm based in Cookeville and work with organizations across Tennessee and online."
+  - q: "What industries have you worked with?"
+    a: "Industrial automation, healthcare, manufacturing and finance."
+  - q: "Can a workshop be built around our team's work?"
+    a: "Yes. Workshops focus on practical AI integration and are built around your group's real tasks."
 
 # Testimonials. Add entries (quote, name, role) when Jesse has them. The section hides while empty.
 testimonials: []

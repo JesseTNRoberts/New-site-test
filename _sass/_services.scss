@@ -68,6 +68,37 @@ $ww-soft: #f6f8fa;
     }
   }
 
+  .ww-hero__kicker {
+    display: block;
+    margin-bottom: 0.35em;
+    font-size: 0.5em;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $gray;
+  }
+
+  .ww-faq {
+    max-width: 720px;
+    margin: 0.5em 0 1.5em;
+
+    details {
+      border-bottom: 1px solid $ww-line;
+    }
+
+    summary {
+      padding: 0.7em 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    p {
+      margin: 0 0 0.9em;
+      font-size: $type-size-6;
+      line-height: 1.5;
+    }
+  }
+
   .ww-industries {
     margin: 0.5em 0 1.5em;
   }

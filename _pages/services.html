@@ -1,13 +1,16 @@
 ---
 layout: single
 title: "Services"
-permalink: /services/
+permalink: /ai-consulting/
+# Briefly lived at /services/ (live, hidden) on 2026-11-04.
+redirect_from:
+  - /services/
 # Hidden for now (Jesse, 2026-11-04). sitemap false also adds noindex. Not linked from anywhere.
 sitemap: false
 # The hero headline is the page's h1, so the theme title is hidden (Jesse, 2026-11-04).
 hide_title: true
 author_profile: true
-seo_title: "Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
+seo_title: "AI Consulting, Workshops and Talks in Tennessee - Jesse Roberts"
 description: "AI consultant and speaker Jesse Roberts helps companies use AI well. Free AI consultation for Tennessee businesses, plus AI audits, workshops and talks."
 # photo: /images/services.jpg
 # photo_alt: "Jesse Roberts giving a talk"
@@ -22,7 +25,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
 
 <header class="ww-hero">
   <div class="ww-hero__text">
-    <h1 class="ww-hero__headline">{{ w.headline }}</h1>
+    <h1 class="ww-hero__headline"><span class="ww-hero__kicker">{{ w.kicker }}</span> {{ w.headline }}</h1>
     <p class="ww-hero__intro">{{ w.subhead }}</p>
     <p class="ww-hero__actions">
       {% for b in w.hero_buttons %}<a class="btn btn--{{ b.style }} btn--large{% if b.offering %} ww-offer__btn{% endif %}" href="{% if b.offering %}?offering={{ b.offering }}#request{% else %}{{ b.href }}{% endif %}"{% if b.offering %} data-offering="{{ b.offering }}"{% endif %}>{{ b.label }}</a>{% endfor %}
@@ -55,6 +58,16 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
   {% for ind in w.industries %}<li><i class="{{ ind.icon }}" aria-hidden="true"></i> {{ ind.name }}</li>{% endfor %}
 </ul>
 
+<h2 id="faq">Common questions</h2>
+<div class="ww-faq">
+  {% for f in w.faq %}
+  <details>
+    <summary>{{ f.q }}</summary>
+    <p>{{ f.a }}</p>
+  </details>
+  {% endfor %}
+</div>
+
 {% if w.testimonials.size > 0 %}
 <div class="ww-quotes">
   {% for q in w.testimonials %}
@@ -71,7 +84,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
   <input type="hidden" name="_subject" value="Services request from jessetnroberts.com">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="{{ site.url }}{{ site.baseurl }}/services/?sent=1#request">
+  <input type="hidden" name="_next" value="{{ site.url }}{{ site.baseurl }}/ai-consulting/?sent=1#request">
   <input type="text" name="_honey" class="ww-form__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <div class="ww-form__row">
@@ -110,6 +123,16 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": {{ o.service | jsonify }}, "description": {{ o.what | strip | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
     ]
   }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{% for f in site.data.services.faq %}
+    { "@type": "Question", "name": {{ f.q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | jsonify }} } }{% unless forloop.last %},{% endunless %}{% endfor %}
+  ]
 }
 </script>
 
