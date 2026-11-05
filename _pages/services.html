@@ -4,6 +4,8 @@ title: "Services"
 permalink: /services/
 # Hidden for now (Jesse, 2026-11-04). sitemap false also adds noindex. Not linked from anywhere.
 sitemap: false
+# The hero headline is the page's h1, so the theme title is hidden (Jesse, 2026-11-04).
+hide_title: true
 author_profile: true
 seo_title: "Jesse Roberts - AI Speaker, Workshops and Consulting in Tennessee"
 description: "AI consultant and speaker Jesse Roberts helps companies use AI well. Free AI consultation for Tennessee businesses, plus AI audits, workshops and talks."
@@ -20,7 +22,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
 
 <header class="ww-hero">
   <div class="ww-hero__text">
-    <p class="ww-hero__headline">{{ w.headline }}</p>
+    <h1 class="ww-hero__headline">{{ w.headline }}</h1>
     <p class="ww-hero__intro">{{ w.subhead }}</p>
     <p class="ww-hero__actions">
       {% for b in w.hero_buttons %}<a class="btn btn--{{ b.style }} btn--large{% if b.offering %} ww-offer__btn{% endif %}" href="{% if b.offering %}?offering={{ b.offering }}#request{% else %}{{ b.href }}{% endif %}"{% if b.offering %} data-offering="{{ b.offering }}"{% endif %}>{{ b.label }}</a>{% endfor %}
@@ -86,7 +88,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
       </select>
     </label>
   </div>
-  <label>Rough dates <input type="text" name="dates" placeholder="For example, sometime in March, or a specific day"></label>
+  <label>Timing <span class="ww-form__opt">(optional)</span> <input type="text" name="timing" placeholder="For example, this spring, or a specific date"></label>
   <label>A short note <textarea name="note" rows="4" placeholder="Your team or audience, and what you hope to get out of it"></textarea></label>
   <button type="submit" class="btn btn--primary btn--large">Send request</button>
 </form>

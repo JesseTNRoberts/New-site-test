@@ -23,7 +23,7 @@ hero_buttons:
 # Form options that aren't offering cards. Listed before the cards' options.
 extra_options:
   - id: consult
-    label: Free consultation (Tennessee businesses)
+    label: Short free consultation (Tennessee businesses)
 
 offerings:
   - id: audit
@@ -41,7 +41,7 @@ offerings:
       - "A practical plan for adoption"
     meta: "For companies and organizations. Scoped to you."
     # Free first consultation for Tennessee businesses (Jesse, 2026-11-04). Shown in this card only.
-    offer: "Free consultation for Tennessee businesses"
+    offer: "Short free consultation for Tennessee businesses"
     offer_id: consult
 
   - id: workshop
