@@ -22,7 +22,6 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
   <div class="ww-hero__text">
     <p class="ww-hero__headline">{{ w.headline }}</p>
     <p class="ww-hero__intro">{{ w.subhead }}</p>
-    <p class="ww-hero__offer"><i class="fas fa-gift" aria-hidden="true"></i> {{ w.offer }}</p>
     <p class="ww-hero__actions">
       {% for b in w.hero_buttons %}<a class="btn btn--{{ b.style }} btn--large{% if b.offering %} ww-offer__btn{% endif %}" href="{% if b.offering %}?offering={{ b.offering }}#request{% else %}{{ b.href }}{% endif %}"{% if b.offering %} data-offering="{{ b.offering }}"{% endif %}>{{ b.label }}</a>{% endfor %}
     </p>
@@ -43,6 +42,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
       {% for pt in o.points %}<li>{{ pt }}</li>{% endfor %}
     </ul>
     <p class="ww-offer__meta">{{ o.meta }}</p>
+    {% if o.offer %}<a class="ww-offer__free ww-pick" href="?offering={{ o.offer_id }}#request" data-offering="{{ o.offer_id }}"><i class="fas fa-gift" aria-hidden="true"></i> {{ o.offer }}</a>{% endif %}
     <a class="btn btn--primary ww-offer__btn" href="?offering={{ o.id }}#request" data-offering="{{ o.id }}">{{ o.button }}</a>
   </section>
   {% endfor %}
@@ -123,7 +123,7 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
   var params = new URLSearchParams(window.location.search);
   pick(params.get('offering'));
   if (params.get('sent')) { var s = document.getElementById('ww-sent'); if (s) s.hidden = false; }
-  var btns = document.querySelectorAll('.ww-offer__btn');
+  var btns = document.querySelectorAll(".ww-offer__btn, .ww-pick");
   for (var j = 0; j < btns.length; j++) {
     btns[j].addEventListener('click', function (e) {
       var id = this.getAttribute('data-offering');

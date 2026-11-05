@@ -12,12 +12,9 @@ headline: "I help companies use AI well."
 subhead: "AI researcher specializing in large language models, the technology behind tools like ChatGPT."
 where: "Assistant Professor at Tennessee Tech in Cookeville. Working with organizations in Nashville, across Tennessee and online."
 
-# Free first consultation for Tennessee businesses (Jesse, 2026-11-04).
-offer: "Free AI consultation for Tennessee businesses."
-
 hero_buttons:
-  - label: Book a free consultation
-    offering: consult
+  - label: Request an AI audit
+    offering: audit
     style: primary
   - label: See how I can help
     href: "#offerings"
@@ -42,7 +39,10 @@ offerings:
       - "Process and structure changes"
       - "New uses for machine learning and data science"
       - "A practical plan for adoption"
-    meta: "For companies and organizations. Scoped to you. Tennessee businesses can start with a free consultation."
+    meta: "For companies and organizations. Scoped to you."
+    # Free first consultation for Tennessee businesses (Jesse, 2026-11-04). Shown in this card only.
+    offer: "Free consultation for Tennessee businesses"
+    offer_id: consult
 
   - id: workshop
     name: Workshops
