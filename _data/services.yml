@@ -107,7 +107,9 @@ faq:
 # Testimonials. Add entries (quote, name, role) when Jesse has them. The section hides while empty.
 testimonials: []
 
-# The form posts to FormSubmit, which emails each request to this address.
-# The first submission sends a one-time activation email to this inbox. After activating,
-# FormSubmit offers a random alias that can replace the address here to keep it out of the page.
-form_email: "JTRoberts@tntech.edu"
+# The form sends to Formspree (formspree.io, Jesse's account), which emails each request to him.
+# Put the form's ID here, the code after formspree.io/f/ in its endpoint. While empty, the form
+# opens a pre-filled email instead. FormSubmit was dropped on 2026-11-04 (its server timed out).
+formspree_id: ""
+# Fallback address for the pre-filled email if Formspree fails. Already public in _config.yml.
+contact_email: "JTRoberts@tntech.edu"

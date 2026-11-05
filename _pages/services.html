@@ -18,7 +18,8 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
 {% comment %}
   Talks, workshops, and AI audits and consulting. Text lives in _data/services.yml.
   This is a service inquiry, kept separate from Meeting Request (office hours, Calendly).
-  The form posts to FormSubmit, which emails Jesse. Each card's Request button links
+  The form sends to Formspree in the background (fetch), which emails Jesse. If Formspree
+  fails, or no formspree_id is set, it offers a pre-filled email to contact_email instead. Each card's Request button links
   ?offering=<id>#request and the small script below preselects that offering.
 {% endcomment %}
 {% assign w = site.data.services %}
@@ -77,15 +78,13 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
 {% endif %}
 
 <h2 id="request">Get in touch</h2>
-<div class="notice--success ww-sent" id="ww-sent" hidden>Thanks, your request is on its way. I'll reply by email.</div>
+<div class="notice--success ww-sent" id="ww-sent" role="status" hidden>Thanks, your request is on its way. I'll reply by email.</div>
+<div class="notice--warning ww-sent" id="ww-failed" role="alert" hidden>The form couldn't send just now. <a id="ww-mailto" href="mailto:{{ w.contact_email }}">Email me your request instead</a>, it's already filled in.</div>
 <p class="ww-form__lede">A few details are enough. I'll reply by email.</p>
 
-<form class="ww-form" action="https://formsubmit.co/{{ w.form_email }}" method="POST">
+<form class="ww-form" id="ww-form" action="{% if w.formspree_id != "" %}https://formspree.io/f/{{ w.formspree_id }}{% else %}mailto:{{ w.contact_email }}{% endif %}" method="POST" data-mailto="{{ w.contact_email }}">
   <input type="hidden" name="_subject" value="Services request from jessetnroberts.com">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="{{ site.url }}{{ site.baseurl }}/ai-consulting/?sent=1#request">
-  <input type="text" name="_honey" class="ww-form__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <input type="text" name="_gotcha" class="ww-form__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <div class="ww-form__row">
     <label>Name <input type="text" name="name" required autocomplete="name"></label>
@@ -147,7 +146,39 @@ description: "AI consultant and speaker Jesse Roberts helps companies use AI wel
   }
   var params = new URLSearchParams(window.location.search);
   pick(params.get('offering'));
-  if (params.get('sent')) { var s = document.getElementById('ww-sent'); if (s) s.hidden = false; }
+  var form = document.getElementById('ww-form');
+  function mailtoHref() {
+    var f = form.elements, lines = [];
+    ['name', 'email', 'organization', 'offering', 'timing', 'note'].forEach(function (k) {
+      if (f[k] && f[k].value) { lines.push(k.charAt(0).toUpperCase() + k.slice(1) + ' ' + f[k].value); }
+    });
+    return 'mailto:' + form.getAttribute('data-mailto') + '?subject=' + encodeURIComponent('Services request from jessetnroberts.com') + '&body=' + encodeURIComponent(lines.join('\n'));
+  }
+  function show(id) {
+    document.getElementById('ww-sent').hidden = id !== 'ww-sent';
+    document.getElementById('ww-failed').hidden = id !== 'ww-failed';
+  }
+  function failed() {
+    document.getElementById('ww-mailto').href = mailtoHref();
+    show('ww-failed');
+    document.getElementById('request').scrollIntoView({ behavior: 'smooth' });
+  }
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type=submit]');
+      if (form.action.indexOf('mailto:') === 0) { window.location.href = mailtoHref(); return; }
+      btn.disabled = true; btn.textContent = 'Sending';
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (r) {
+          if (!r.ok) { throw new Error('status ' + r.status); }
+          form.reset(); form.hidden = true; show('ww-sent');
+          document.getElementById('request').scrollIntoView({ behavior: 'smooth' });
+        })
+        .catch(failed)
+        .then(function () { btn.disabled = false; btn.textContent = 'Send request'; });
+    });
+  }
   var btns = document.querySelectorAll(".ww-offer__btn, .ww-pick");
   for (var j = 0; j < btns.length; j++) {
     btns[j].addEventListener('click', function (e) {
