@@ -50,7 +50,9 @@ why:
     text: "I research how large language models reason, and where they fail."
   - icon: fas fa-map-marker-alt
     title: "Tennessee based"
-    text: "On-site once we're working together. The first call is by phone or video."
+    # Jesse found the "once we're working together" caveat unhelpful (2026-11-08). On-site work
+    # still starts with a contract, the free call is by phone or video.
+    text: "Close enough to work on-site with your team."
 
 # Form options that aren't offering cards. Listed before the cards' options.
 extra_options:
