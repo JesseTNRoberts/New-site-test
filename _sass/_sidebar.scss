@@ -91,8 +91,8 @@
 
   img {
     max-width: 175px;
-    // Square, not round (Jesse, 2026-11-08).
-    border-radius: 0;
+    // Slightly softened corners, not round (Jesse, 2026-11-08).
+    border-radius: 6px;
 
     // The wide AAAI photo fills the sidebar width on large screens.
     &.author__avatar--wide {
