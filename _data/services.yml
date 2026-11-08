@@ -113,6 +113,13 @@ steps:
   - title: "Ongoing support"
     text: "Help putting the plan into practice, if you want it."
 
+# Wide photo after the "why" strip, backing the LLM expertise point (Jesse's, 2026-11-08).
+# Shown wide so the AAAI sign reads. A tight headshot crop of it didn't add anything.
+wide_photo:
+  src: /images/consulting-aaai.jpg
+  alt: "Jesse Roberts standing in front of giant AAAI letters at the conference"
+  caption: "At AAAI, one of the top AI research conferences"
+
 # Recent work, anonymized. Jesse's description (2026-11-08). Never name the client.
 cases:
   - who: "International manufacturer, Tennessee"

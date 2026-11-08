@@ -14,11 +14,11 @@ seo_title: "Cumberland Gradient | AI Consulting, Workshops and Talks in Tennesse
 description: "Cumberland Gradient is Jesse Roberts's AI consulting practice. AI audits, workshops and talks for Tennessee companies, and a free first consultation."
 og_image: /assets/cumberland-gradient/share.png
 og_image_alt: "Cumberland Gradient logo. AI consulting that closes the gap."
-# Cropped from Jesse's photo at AAAI (2026-11-08). Only 260x325 px, so swap in a sharper
-# headshot when Jesse has one. The caption explains AAAI for business readers.
-photo: /images/consulting-headshot.jpg
-photo_alt: "Jesse Roberts in a flannel shirt and vest, smiling, at the AAAI conference"
-photo_caption: "At AAAI, one of the top AI research conferences"
+# No hero photo (2026-11-08). A tight crop of the AAAI photo didn't add anything (Jesse), so the
+# wide AAAI photo sits after the "why" strip instead (wide_photo in _data/services.yml). If Jesse gets
+# a real headshot, set photo, photo_alt and (optional) photo_caption here.
+# photo: /images/consulting-headshot.jpg
+# photo_alt: "Jesse Roberts"
 ---
 {% comment %}
   Talks, workshops, and AI audits and consulting. Text lives in _data/services.yml.
@@ -52,6 +52,13 @@ photo_caption: "At AAAI, one of the top AI research conferences"
 <ul class="cg-why" aria-label="Why work with me">
   {% for y in w.why %}<li><i class="{{ y.icon }}" aria-hidden="true"></i><strong>{{ y.title }}</strong> <span>{{ y.text }}</span></li>{% endfor %}
 </ul>
+
+{% if w.wide_photo %}
+<figure class="cg-wide">
+  <img src="{{ w.wide_photo.src | relative_url }}" alt="{{ w.wide_photo.alt }}" width="1290" height="670">
+  <figcaption>{{ w.wide_photo.caption }}</figcaption>
+</figure>
+{% endif %}
 
 <h2 id="offerings">How I can help</h2>
 <div class="ww-offers">
