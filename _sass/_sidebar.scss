@@ -101,10 +101,7 @@
       }
     }
 
-    @include breakpoint($large) {
-      padding: 5px;
-      border: 1px solid $border-color;
-    }
+    // No frame around the photo (Jesse, 2026-11-08).
   }
 }
 
