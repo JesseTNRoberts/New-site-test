@@ -14,8 +14,10 @@ seo_title: "Cumberland Gradient | AI Consulting, Workshops and Talks in Tennesse
 description: "Cumberland Gradient is Jesse Roberts's AI consulting practice. AI audits, workshops and talks for Tennessee companies, and a free first consultation."
 og_image: /assets/cumberland-gradient/share.png
 og_image_alt: "Cumberland Gradient logo. AI consulting that closes the gap."
-# photo: /images/services.jpg
-# photo_alt: "Jesse Roberts giving a talk"
+# Cropped from Jesse's photo at the finish of a 50K (2026-11-08). Only Jesse is in frame.
+photo: /images/consulting-headshot.jpg
+photo_alt: "Jesse Roberts, smiling, at the finish of a 50K trail race"
+photo_caption: "At the finish of a 50K"
 ---
 {% comment %}
   Talks, workshops, and AI audits and consulting. Text lives in _data/services.yml.
@@ -39,7 +41,10 @@ og_image_alt: "Cumberland Gradient logo. AI consulting that closes the gap."
     <p class="ww-hero__where"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> {{ w.where }}</p>
   </div>
   {% if page.photo %}
-  <img class="ww-hero__photo" src="{{ page.photo | relative_url }}" alt="{{ page.photo_alt | default: 'Jesse Roberts' }}">
+  <figure class="ww-hero__figure">
+    <img class="ww-hero__photo" src="{{ page.photo | relative_url }}" alt="{{ page.photo_alt | default: 'Jesse Roberts' }}" width="336" height="420">
+    {% if page.photo_caption %}<figcaption>{{ page.photo_caption }}</figcaption>{% endif %}
+  </figure>
   {% endif %}
 </header>
 
