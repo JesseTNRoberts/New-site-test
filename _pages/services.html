@@ -103,7 +103,7 @@ og_image_alt: "Cumberland Gradient logo. AI consulting that closes the gap."
 <h2 id="request">Get in touch</h2>
 <div class="notice--success ww-sent" id="ww-sent" role="status" hidden>Thanks, your request is on its way. I'll reply by email.</div>
 <div class="notice--warning ww-sent" id="ww-failed" role="alert" hidden>The form couldn't send just now. <a id="ww-mailto" href="mailto:{{ w.contact_email }}">Email me your request instead</a>, it's already filled in.</div>
-<p class="ww-form__lede">A few details are enough. I'll reply by email.</p>
+<p class="ww-form__lede">A few details are enough. I'll reply by email. Prefer your own email? Write to <a href="mailto:{{ w.contact_email }}?subject={{ 'Inquiry for Cumberland Gradient' | uri_escape }}"><strong>{{ w.contact_email }}</strong></a>.</p>
 
 <form class="ww-form" id="ww-form" action="{% if w.formspree_id != "" %}https://formspree.io/f/{{ w.formspree_id }}{% else %}mailto:{{ w.contact_email }}{% endif %}" method="POST" data-mailto="{{ w.contact_email }}">
   <input type="hidden" name="_subject" value="Cumberland Gradient request">
