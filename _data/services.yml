@@ -136,6 +136,9 @@ industries:
     icon: fas fa-cogs
   - name: "Finance"
     icon: fas fa-university
+  # An accounting firm (Jesse, 2026-11-08).
+  - name: "Accounting"
+    icon: fas fa-calculator
   # An NBA team, the Memphis Grizzlies (Jesse, 2026-11-04). Not named unless Jesse says so.
   - name: "Professional sports"
     icon: fas fa-basketball-ball
@@ -156,7 +159,7 @@ faq:
   - q: "Do you work with organizations outside Tennessee?"
     a: "Yes. I'm based in Cookeville and work with organizations across Tennessee and online."
   - q: "What industries have you worked with?"
-    a: "Industrial automation, healthcare, manufacturing, finance and professional sports."
+    a: "Industrial automation, healthcare, manufacturing, finance, accounting and professional sports."
   - q: "Can a workshop be built around our team's work?"
     # Jesse's wording (2026-11-04).
     a: "Yes, workshops can be tailored to your team and work scenario."
