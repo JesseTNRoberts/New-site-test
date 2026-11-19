@@ -3,9 +3,9 @@
 # Files starting with "_" are not published, so this template never appears on the site.
 #
 # Adding a lecture: put the slide file in <COURSE>/ in the JesseTNRoberts/lectures repo and add an
-# entry for it to that repo's lectures.json (see its README). It shows on the site within a minute,
+# entry for it to that repo's lectures.yml (see its README). It shows on the site within a minute,
 # no site build needed. Entries under `lectures:` here still work (planned sessions, past courses)
-# and are merged with lectures.json by week and session. It appears on the course page and in the lecture library on /teaching/.
+# and are merged with lectures.yml by week and session. It appears on the course page and in the lecture library on /teaching/.
 
 layout: course
 title: "Course Title"

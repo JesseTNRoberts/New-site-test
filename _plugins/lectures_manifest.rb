@@ -1,5 +1,5 @@
 # Published lectures live in the JesseTNRoberts/lectures repo, served at /lectures/, with a list
-# in its lectures.json (one array per course_id). This generator reads that list at build time and
+# in its lectures.yml (one list per course_id). This generator reads that list at build time and
 # merges it into each course file's `lectures:` (matched by week and session, the list wins), so
 # course pages, the lecture library and course cards are built from it. The Teaching page and
 # course pages also re-read the list in the browser (_includes/lectures-live.html), so a lecture
@@ -9,16 +9,18 @@
 # Local builds without network can set LECTURES_MANIFEST_FILE to a copy, or
 # LECTURES_MANIFEST_SKIP=1 to build without it.
 require "json"
+require "yaml"
+require "date"
 require "net/http"
 require "uri"
 
 module LecturesManifest
-  URL = "https://raw.githubusercontent.com/JesseTNRoberts/lectures/main/lectures.json".freeze
+  URL = "https://raw.githubusercontent.com/JesseTNRoberts/lectures/main/lectures.yml".freeze
   PATH_KEYS = %w[slides notebook pdf].freeze
 
   def self.load
     if (f = ENV["LECTURES_MANIFEST_FILE"]) && !f.empty?
-      return JSON.parse(File.read(f, encoding: "UTF-8"))
+      return parse(File.read(f, encoding: "UTF-8"))
     end
     uri = URI(ENV["LECTURES_MANIFEST_URL"] || URL)
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https",
@@ -26,7 +28,15 @@ module LecturesManifest
       http.get(uri.request_uri, "Cache-Control" => "no-cache")
     end
     raise "HTTP #{res.code}" unless res.is_a?(Net::HTTPSuccess)
-    JSON.parse(res.body.force_encoding("UTF-8"))
+    parse(res.body.force_encoding("UTF-8"))
+  end
+
+  # A map of course_id to lecture lists. Older lists had them under a "courses" key.
+  def self.parse(text)
+    data = YAML.safe_load(text, permitted_classes: [Date]) || {}
+    raise "the top level should be course ids" unless data.is_a?(Hash)
+    data = data["courses"] if data["courses"].is_a?(Hash)
+    data
   end
 
   def self.normalize(entry)
@@ -52,10 +62,10 @@ module LecturesManifest
       begin
         data = LecturesManifest.load
       rescue StandardError => e
-        raise "Couldn't read the lectures list (#{e.class}: #{e.message}). " \
+        raise "Couldn't read the lectures list (lectures.yml in the lectures repo) (#{e.class}: #{e.message}). " \
               "Set LECTURES_MANIFEST_SKIP=1 to build without it."
       end
-      courses = data["courses"] || {}
+      courses = data
       col = site.collections["teaching"]
       return unless col
 
@@ -75,7 +85,7 @@ module LecturesManifest
           [w.to_s =~ /\A\d+\z/ ? w.to_i : 10_000, s.to_s =~ /\A\d+\z/ ? s.to_i : 0, idx]
         end.map(&:first)
       end
-      Jekyll.logger.info "Lectures:", "merged lectures.json for #{courses.keys.join(', ')}"
+      Jekyll.logger.info "Lectures:", "merged lectures.yml for #{courses.keys.join(', ')}"
     end
   end
 end
